@@ -1,0 +1,30 @@
+﻿@page "/posts"
+@inject blazorControlPanel.Services.IPostsServise PostsService
+@using  blazorControlPanel.Models
+
+
+@if (posts == null)
+{
+    <p>Подождите, пожалуйста!</p>
+}
+else
+{
+    @foreach (var post in posts)
+    {
+        <Post post="post"></Post>
+    }
+}
+
+
+
+
+
+
+@code{
+    List<post> posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        posts = await PostsService.posts();
+    }
+}

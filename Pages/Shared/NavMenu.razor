@@ -1,0 +1,48 @@
+﻿<div class="navbar navbar-expand-md bg-dark flex-column align-items-stretch" style="max-width:300px">
+    <div class="navbar-brand text-white w-100 pt-1 pl-md-3" style="margin-top:-1px;">
+        <button class="navbar-toggler text-white" data-toggle="collapse" data-target="#c_me"><i class="fas fa-bars"></i></button>
+        <a class="text-white text-decoration-none" href="/">
+            <h5 class="d-inline-block mt-0 mb-0"><b>Панель управления</b></h5>
+        </a>
+    </div>
+    <nav id="c_me" class="navbar-collapse collapse flex-column align-items-stretch bg-dark text-white rounded w-100 mt-3 mb-2">
+        <a class="btn btn-dark btn-block text-left m-0" href="/"><i class="fas fa-home pr-2 ico"></i>Главная</a>
+        <button hidden class="btn btn-dark btn-block text-left m-0"><i class="fas fa-users pr-2 ico"></i>Пользователи</button>
+        <div class="rounded">
+            @*Публикации*@
+            <div class="btn-group btn-block rounded">
+                <a class="btn btn-dark btn-block text-left m-0" href="/posts"><i class="fas fa-home pr-2 ico"></i>Публикации</a>
+                <button class="btn btn-dark" data-toggle="collapse" data-target="#c1"><span class="fas fa-chevron-down"></span></button>
+            </div>
+            <div class="collapse rounded" id="c1">
+                <a class="btn btn-dark btn-block text-left m-0 pl-4" href="/posts">Все публикации</a>
+                <a class="btn btn-dark btn-block text-left m-0 pl-4" asp-area="Control" asp-controller="posts" asp-action="Create">Создать</a>
+            </div>
+        </div>
+        <div class="rounded">
+            @*Фотоальбомы*@
+            <div class="btn-group btn-block rounded">
+                <a class="btn btn-dark btn-block text-left" asp-area="Control" asp-controller="imageAlbums" asp-action="Index"><i class="fas fa-images pr-2 ico"></i>Фотоальбомы</a>
+                <button class="btn btn-dark" data-toggle="collapse" data-target="#c2"><i class="fas fa-chevron-down"></i></button>
+            </div>
+            <div class="collapse rounded" id="c2">
+                <a class="btn btn-dark btn-block text-left m-0 pl-4" asp-area="Control" asp-controller="imageAlbums" asp-action="Index">Все фотоальбомы</a>
+                <a class="btn btn-dark btn-block text-left m-0 pl-4" asp-area="Control" asp-controller="imageAlbums" asp-action="Create">Создать</a>
+            </div>
+        </div>
+        <div hidden class="rounded">
+            @*Комментарии*@
+            <div class="btn-group btn-block rounded">
+                <button class="btn btn-dark btn-block text-left"><i class="far fa-comments pr-2 ico"></i>Комментарии</button>
+                <button class="btn btn-dark" data-toggle="collapse" data-target="#c3"><i class="fas fa-chevron-down"></i></button>
+            </div>
+            <div class="collapse rounded" id="c3">
+                <button class="btn btn-dark btn-block text-left m-0 pl-4">Все комментарии</button>
+                <button class="btn btn-dark btn-block text-left m-0 pl-4">Создать</button>
+            </div>
+        </div>
+    </nav>
+</div>
+
+@code {
+}

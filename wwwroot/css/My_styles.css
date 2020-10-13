@@ -1,0 +1,70 @@
+﻿/*Мои стили*/
+.ico {
+    width: 30px;
+}
+
+@media screen and (min-width:768px) {
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .my_sidebar {
+        position: fixed;
+        top: 0;
+        z-index: 10010;
+        width: 280px;
+        height: 100%;
+        color: white;
+        margin-right: 280px;
+    }
+
+    .my_header {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 280px;
+        z-index: 10000;
+    }
+
+    .my_content {
+        margin-left: 280px;
+        margin-top: 56px;
+        flex-grow: 1;
+    }
+
+    .my_gamburger {
+        display: none;
+    }
+}
+
+@media screen and (max-width:768px) {
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .my_sidebar {
+        position: fixed;
+        top: 0;
+        z-index: 10010;
+        width: 100%;
+        color: white;
+    }
+
+    .my_header {
+        position: fixed;
+        z-index: 10000;
+        width: 100%;
+    }
+
+    .my_content {
+        margin-top: 100px;
+    }
+
+    .my_gamburger {
+        display: inline-block;
+    }
+}
+
+/*Конец моих стиле
