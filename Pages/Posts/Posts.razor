@@ -1,6 +1,7 @@
 ﻿@page "/posts"
 @inject blazorControlPanel.Services.IPostsServise PostsService
 @using  blazorControlPanel.Models
+@using System.Collections.Generic
 
 
 @if (posts == null)
@@ -9,15 +10,11 @@
 }
 else
 {
-    @foreach (var post in posts)
+    @foreach (var post in posts.AsEnumerable().Reverse())
     {
         <Post post="post"></Post>
     }
 }
-
-
-
-
 
 
 @code{
