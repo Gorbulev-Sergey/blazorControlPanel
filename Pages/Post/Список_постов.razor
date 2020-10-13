@@ -1,0 +1,27 @@
+﻿<div class="accordion mb-3" id="posts">
+    <nav class="d-flex align-items-center mb-3">
+        <button class="btn btn-dark mr-3" type="button" data-toggle="collapse" data-target="#published" aria-expanded="true">Опубликованные</button>
+        <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#notpublished" aria-expanded="false">Неопубликованные</button>
+    </nav>   
+    <div class="card border-0">
+        <div class="collapse show" id="published" data-parent="#posts">
+            <div class="card-body">
+                @Опубликованные
+            </div>
+        </div>
+        <div class="collapse" id="notpublished" data-parent="#posts">
+            <div class="card-body">
+                @Неопубликованные
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment Опубликованные { get; set; }
+
+    [Parameter]
+    public RenderFragment Неопубликованные { get; set; }
+}

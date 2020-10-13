@@ -1,7 +1,6 @@
 ﻿@page "/posts"
 @inject blazorControlPanel.Services.IPostsServise PostsService
 @using  blazorControlPanel.Models
-@using System.Collections.Generic
 
 
 @if (posts == null)
@@ -10,11 +9,24 @@
 }
 else
 {
-    @foreach (var post in posts.AsEnumerable().Reverse())
-    {
-        <Post post="post"></Post>
-    }
+    <Список_постов>
+        <Опубликованные>
+            @foreach (var post in posts.Where(p => p.published == true).AsEnumerable().Reverse())
+            {
+                <Post post="post"></Post>
+            }
+        </Опубликованные>
+        <Неопубликованные>
+            @foreach (var post in posts.Where(p => p.published == false).AsEnumerable().Reverse())
+            {
+                <Post post="post"></Post>
+            }
+        </Неопубликованные>
+    </Список_постов>
 }
+
+
+
 
 
 @code{

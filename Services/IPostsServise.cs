@@ -11,6 +11,7 @@ namespace blazorControlPanel.Services
     interface IPostsServise
     {
         Task<List<post>> posts();
+        Task<post> create(post post);
     }
 
     public class PostsService : IPostsServise
@@ -20,6 +21,17 @@ namespace blazorControlPanel.Services
         {
             _context = context;
         }
+
+        public async Task<post> create(post post)
+        {
+            if (post != null)
+            {
+                _context.posts.Add(post);
+                await _context.SaveChangesAsync();
+            }
+            return post;
+        }
+
         public async Task<List<post>> posts()
         {
             return await _context.posts.ToListAsync();         
