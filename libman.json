@@ -10,6 +10,10 @@
       "provider": "jsdelivr",
       "library": "bootstrap@4.5.2",
       "destination": "wwwroot/lib/bootstrap/"
+    },
+    {
+      "library": "popper.js@2.5.3",
+      "destination": "wwwroot/popper.js/"
     }
   ]
 }

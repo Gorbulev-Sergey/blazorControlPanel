@@ -24,7 +24,7 @@ namespace blazorControlPanel.Models
             videos = new List<video>();
         }
         public int ID { get; set; }
-        [Display(Name ="Название")]
+        [Required(ErrorMessage ="Добавьте, пожалуйста, название публикации"), Display(Name ="Название")]
         public string title { get; set; }
         [Display(Name = "Url обложки"), DataType(DataType.ImageUrl)]
         public string cover_image { get; set; }

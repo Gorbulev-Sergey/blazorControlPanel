@@ -1,5 +1,6 @@
 ﻿using blazorControlPanel.Data;
 using blazorControlPanel.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace blazorControlPanel.Services
     interface IPostsServise
     {
         Task<List<post>> posts();
-        Task<post> create(post post);
+        Task<string> create(post post);
     }
 
     public class PostsService : IPostsServise
@@ -22,14 +23,16 @@ namespace blazorControlPanel.Services
             _context = context;
         }
 
-        public async Task<post> create(post post)
+        [Authorize(Roles ="Администратор")]
+        public async Task<string> create(post post)
         {
             if (post != null)
             {
                 _context.posts.Add(post);
                 await _context.SaveChangesAsync();
+                return "Сохранена";
             }
-            return post;
+            return "Не сохранена";
         }
 
         public async Task<List<post>> posts()
