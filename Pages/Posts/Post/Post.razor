@@ -1,0 +1,104 @@
+﻿@*<div class="row mb-2 border-top pt-2">
+    <div class="col-2"><img class="img-fluid" src="@post.cover_image" /></div>
+    <div class="col-6 d-flex flex-column">
+        <small class="text-muted">@post.created.ToShortDateString()</small>
+        <h5>@post.title</h5>
+        @((MarkupString)post.description)
+    </div>
+    <div class="col-4">
+        <div class="d-flex justify-content-between">
+            <div>
+                <div class="dropdown">
+                    <button class="btn btn-light btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        @post.type.ToString()
+                    </button>
+                    <div class="dropdown-menu">
+                        <button class="dropdown-item">Новость</button>
+                        <button class="dropdown-item">Статья</button>
+                        <button class="dropdown-item">Объявление</button>
+                        <button class="dropdown-item">Видео</button>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-light btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        @post.published
+                    </button>
+                    <div class="dropdown-menu">
+                        <button class="dropdown-item">Опубликовано</button>
+                        <button class="dropdown-item">Неопубликовано</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-light mr-1" title="изменить"><i class="fas fa-pencil-alt"></i></button>
+                <button class="btn btn-light" title="удалить"><i class="fas fa-trash text-danger"></i></button>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+@inject blazorControlPanel.Services.IPostsServise PostsService 
+
+<EditForm Model="post">
+    <div class="row mb-2 border-top pt-2">
+        <div class="col-2"><img class="img-fluid" src="@post.cover_image" /></div>
+        <div class="col-6 d-flex flex-column">
+            <small class="text-muted">@post.created.ToShortDateString()</small>
+            <h5>@post.title</h5>
+            @((MarkupString)post.description)
+        </div>
+        <div class="col-4">
+            <div class="d-flex justify-content-between">
+                <select class="btn btn-light btn-sm" @bind="тип_публикации">
+                    @foreach (var t in type.GetNames(typeof(type)).ToList())
+                    {
+                        <option class="dropdown-item">@t</option>
+                    }
+                </select>
+                <div class="btn btn-light btn-sm">
+                    <label class="form-check-label">Опубликовано</label>
+                    <input class="form-check-input bg-dark" type="checkbox" value="false" @bind="публикация_опубликована">                    
+                </div>
+                <div>
+                    <button class="btn btn-light mr-1" title="изменить"><i class="fas fa-pencil-alt"></i></button>
+                    <button class="btn btn-light" title="удалить" @onclick="удалить_публикацию"><i class="fas fa-trash text-danger"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+
+
+@code {
+    [Parameter]
+    public post post { get; set; }
+
+    string тип_публикации
+    {
+        get
+        {
+            return post.type.ToString();
+        }
+        set
+        {
+            post.type = Enum.Parse<type>(value);
+            PostsService.update(post);
+        }
+    }
+
+    bool публикация_опубликована
+    {
+        get { return post.published; }
+        set
+        {
+            post.published = value;
+            PostsService.update(post);
+        }
+    }
+
+    void удалить_публикацию()
+    {
+        PostsService.delete(post.ID);
+    }
+}

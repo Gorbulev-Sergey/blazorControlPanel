@@ -13,6 +13,8 @@ namespace blazorControlPanel.Services
     {
         Task<List<post>> posts();
         Task<string> create(post post);
+        Task<int> update(post post);
+        Task<int> delete(int id);
     }
 
     public class PostsService : IPostsServise
@@ -23,7 +25,12 @@ namespace blazorControlPanel.Services
             _context = context;
         }
 
-        [Authorize(Roles ="Администратор")]
+        public async Task<List<post>> posts()
+        {
+            return await _context.posts.ToListAsync();
+        }
+
+        [Authorize(Roles ="Администратор, Редактор")]
         public async Task<string> create(post post)
         {
             if (post != null)
@@ -35,9 +42,18 @@ namespace blazorControlPanel.Services
             return "Не сохранена";
         }
 
-        public async Task<List<post>> posts()
+        [Authorize(Roles = "Администратор, Редактор")]
+        public async Task<int> update(post post)
         {
-            return await _context.posts.ToListAsync();         
+            _context.Entry(post).State = EntityState.Modified;            
+            return await _context.SaveChangesAsync();            
+        }
+
+        [Authorize(Roles = "Администратор, Редактор")]
+        public async Task<int> delete(int id)
+        {
+            _context.posts.Remove(_context.posts.FirstOrDefault(p=>p.ID==id));
+            return await _context.SaveChangesAsync();
         }
     }
 }
