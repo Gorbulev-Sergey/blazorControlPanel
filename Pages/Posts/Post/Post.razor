@@ -48,22 +48,21 @@
             @((MarkupString)post.description)
         </div>
         <div class="col-4">
-            <div class="d-flex justify-content-between">
-                <select class="btn btn-light btn-sm" @bind="тип_публикации">
-                    @foreach (var t in type.GetNames(typeof(type)).ToList())
-                    {
-                        <option class="dropdown-item">@t</option>
-                    }
-                </select>
-                <div class="btn btn-light btn-sm">
-                    <label class="form-check-label">Опубликовано</label>
-                    <input class="form-check-input bg-dark" type="checkbox" value="false" @bind="публикация_опубликована">                    
+                <div class="btn-group">
+                    <select class="btn btn-light" @bind="тип_публикации" title="Тип публикации">
+                        @foreach (var t in type.GetNames(typeof(type)).ToList())
+                        {
+                            <option class="bg-light">@t</option>
+                        }
+                    </select>
+                    <select class="btn btn-light" @bind="публикация_опубликована" title="Опубликована/Неопубликована">
+                        <option class="bg-light" value="true">Опубликована</option>
+                        <option class="bg-light" value="false">Неопубликована</option>
+                    </select>
+
+                    <button class="btn btn-light" title="Изменить"><i class="fas fa-pencil-alt"></i></button>
+                    <button class="btn btn-light" title="Удалить" @onclick="удалить_публикацию"><i class="fas fa-trash text-danger"></i></button>
                 </div>
-                <div>
-                    <button class="btn btn-light mr-1" title="изменить"><i class="fas fa-pencil-alt"></i></button>
-                    <button class="btn btn-light" title="удалить" @onclick="удалить_публикацию"><i class="fas fa-trash text-danger"></i></button>
-                </div>
-            </div>
         </div>
     </div>
 </EditForm>
@@ -87,12 +86,16 @@
         }
     }
 
-    bool публикация_опубликована
+    string публикация_опубликована
     {
-        get { return post.published; }
+        get {
+            if (post.published) { return "true"; }
+            else { return "false"; }
+        }
         set
         {
-            post.published = value;
+            if (value == "true") { post.published = true; }
+            else { post.published = false; }
             PostsService.update(post);
         }
     }

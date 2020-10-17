@@ -6,12 +6,36 @@
         </a>
     </div>
     <nav id="c_me" class="navbar-collapse collapse flex-column align-items-stretch bg-dark text-white rounded w-100 mt-3 mb-2">
+        @*Главная*@
         <a class="btn btn-dark btn-block text-left m-0" href="/"><i class="fas fa-home pr-2 ico"></i>Главная</a>
-        <button hidden class="btn btn-dark btn-block text-left m-0"><i class="fas fa-users pr-2 ico"></i>Пользователи</button>
-        <div class="rounded">
+        @*Пользователи*@
+        <a class="btn btn-dark btn-block text-left m-0" href="/users"><i class="fas fa-users pr-2 ico"></i>Пользователи</a>
+        @*Публикации*@
+        <div class="btn-group btn-block rounded p-0 m-0">
+            <a class="btn btn-dark btn-block text-left m-0" href="/posts"><i class="fas fa-newspaper pr-2 ico"></i>Публикации</a>
+            <a class="btn btn-dark" href="/posts/create"><i class="fas fa-plus"></i></a>
+        </div>
+        @*Комментарии*@
+        <a class="btn btn-dark btn-block text-left m-0" href="/comments"><i class="far fa-comments pr-2 ico"></i>Комментарии</a>
+        @*Лайки*@
+        <a class="btn btn-dark btn-block text-left m-0" href="/likes"><i class="fas fa-heart pr-2 ico"></i>Лайки</a>
+        @*Фотографии*@
+        <div class="btn-group btn-block rounded p-0 m-0">
+            <a class="btn btn-dark btn-block text-left m-0" href="/images"><i class="fas fa-images pr-2 ico"></i>Фотографии</a>
+            <a class="btn btn-dark" href="/images/create"><i class="fas fa-plus"></i></a>
+        </div>
+        @*Расписание*@
+        <div class="btn-group btn-block rounded p-0 m-0">
+            <a class="btn btn-dark btn-block text-left m-0" href="/schedule"><i class="fas fa-calendar-alt pr-2 ico"></i>Расписание</a>
+            <a class="btn btn-dark" href="/schedule/create"><i class="fas fa-plus"></i></a>
+        </div>
+
+
+
+        <div hidden class="rounded">
             @*Публикации*@
             <div class="btn-group btn-block rounded">
-                <a class="btn btn-dark btn-block text-left m-0" href="/posts"><i class="fas fa-home pr-2 ico"></i>Публикации</a>
+                <a class="btn btn-dark btn-block text-left m-0" href="/posts"><i class="fas fa-newspaper pr-2 ico"></i>Публикации</a>
                 <button class="btn btn-dark" data-toggle="collapse" data-target="#c1"><span class="fas fa-chevron-down"></span></button>
             </div>
             <div class="collapse rounded" id="c1">
@@ -19,7 +43,7 @@
                 <a class="btn btn-dark btn-block text-left m-0 pl-4" asp-area="Control" asp-controller="posts" asp-action="Create">Создать</a>
             </div>
         </div>
-        <div class="rounded">
+        <div hidden class="rounded">
             @*Фотоальбомы*@
             <div class="btn-group btn-block rounded">
                 <a class="btn btn-dark btn-block text-left" asp-area="Control" asp-controller="imageAlbums" asp-action="Index"><i class="fas fa-images pr-2 ico"></i>Фотоальбомы</a>
@@ -30,17 +54,7 @@
                 <a class="btn btn-dark btn-block text-left m-0 pl-4" asp-area="Control" asp-controller="imageAlbums" asp-action="Create">Создать</a>
             </div>
         </div>
-        <div hidden class="rounded">
-            @*Комментарии*@
-            <div class="btn-group btn-block rounded">
-                <button class="btn btn-dark btn-block text-left"><i class="far fa-comments pr-2 ico"></i>Комментарии</button>
-                <button class="btn btn-dark" data-toggle="collapse" data-target="#c3"><i class="fas fa-chevron-down"></i></button>
-            </div>
-            <div class="collapse rounded" id="c3">
-                <button class="btn btn-dark btn-block text-left m-0 pl-4">Все комментарии</button>
-                <button class="btn btn-dark btn-block text-left m-0 pl-4">Создать</button>
-            </div>
-        </div>
+
     </nav>
 </div>
 

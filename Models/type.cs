@@ -8,13 +8,14 @@ namespace blazorControlPanel.Models
 {
     public enum type
     {
-        [Display(Name = "Новость")]
-        news,
-        [Display(Name = "Cтатья")]
-        article,
-        [Display(Name = "Видео")]
-        video,
         [Display(Name = "Объявление")]
-        notification
+        Объявление,
+        [Display(Name = "Новость")]
+        Новость,
+        [Display(Name = "Cтатья")]
+        Статья,
+        [Display(Name = "Видео")]
+        Видео
+        
     }
 }

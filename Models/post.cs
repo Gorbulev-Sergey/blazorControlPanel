@@ -15,7 +15,7 @@ namespace blazorControlPanel.Models
         {
             created = DateTime.Now;
             updated = new DateTime();
-            type = type.news;
+            type = type.Новость;
             published = false;
             tags = new List<tag>();
             comments = new List<comment>();

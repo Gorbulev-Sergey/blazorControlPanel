@@ -94,7 +94,7 @@
                                 <input name="cover_image" class="form-control border-0" type="text" placeholder="Url обложки публикации" @bind="new_post.cover_image" />
                                 <img class="img-fluid rounded mt-3" src="@new_post.cover_image" />
                             </div>
-                            <button class="btn btn-dark" type="submit" @onclick="(() => set_post_type(type.article))">Добавить</button>
+                            <button class="btn btn-dark" type="submit" @onclick="(() => set_post_type(type.Статья))">Добавить</button>
                         </EditForm>
                     </div>
                     <div class="collapse show" data-parent="#a_type" id="c_news">
@@ -120,7 +120,7 @@
                                 <input name="cover_image" class="form-control border-0" type="text" placeholder="Url обложки публикации" @bind="new_post.cover_image" />
                                 <img class="img-fluid rounded mt-3" src="@new_post.cover_image" />
                             </div>
-                            <button class="btn btn-dark" type="submit" @onclick="(() => set_post_type(type.news))">Добавить</button>
+                            <button class="btn btn-dark" type="submit" @onclick="(() => set_post_type(type.Новость))">Добавить</button>
                         </EditForm>
                     </div>
                     <div class="collapse" data-parent="#a_type" id="c_notif">
@@ -143,7 +143,7 @@
                                 <input name="cover_image" class="form-control border-0" type="text" placeholder="Url обложки публикации" @bind="new_post.cover_image" />
                                 <img class="img-fluid rounded mt-3" src="@new_post.cover_image" />
                             </div>
-                            <button class="btn btn-dark" type="submit" @onclick="(() => set_post_type(type.notification))">Добавить</button>
+                            <button class="btn btn-dark" type="submit" @onclick="(() => set_post_type(type.Объявление))">Добавить</button>
                         </EditForm>
                     </div>
                     <div class="collapse" data-parent="#a_type" id="c_video">
@@ -170,7 +170,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="btn btn-dark" type="submit" @onclick="(() => set_post_type(type.video))">Добавить</button>
+                            <button class="btn btn-dark" type="submit" @onclick="(() => set_post_type(type.Видео))">Добавить</button>
                         </EditForm>
                     </div>
                 </div>
@@ -194,10 +194,10 @@
                     </div>
                     <div class="col">
                         <h6>Опубликованных:</h6>
-                        <p class=" d-flex justify-content-between align-items-center">статей <span class="badge badge-dark">@posts.Where(p => p.published == true && p.type == type.article).Count()</span></p>
-                        <p class=" d-flex justify-content-between align-items-center">новостей <span class="badge badge-dark">@posts.Where(p => p.published == true && p.type == type.news).Count()</span></p>
-                        <p class=" d-flex justify-content-between align-items-center">объявлений <span class="badge badge-dark">@posts.Where(p => p.published == true && p.type == type.notification).Count()</span></p>
-                        <p class=" d-flex justify-content-between align-items-center">видеозаписей <span class="badge badge-dark">@posts.Where(p => p.published == true && p.type == type.video).Count()</span></p>
+                        <p class=" d-flex justify-content-between align-items-center">статей <span class="badge badge-dark">@posts.Where(p => p.published == true && p.type == type.Статья).Count()</span></p>
+                        <p class=" d-flex justify-content-between align-items-center">новостей <span class="badge badge-dark">@posts.Where(p => p.published == true && p.type == type.Новость).Count()</span></p>
+                        <p class=" d-flex justify-content-between align-items-center">объявлений <span class="badge badge-dark">@posts.Where(p => p.published == true && p.type == type.Объявление).Count()</span></p>
+                        <p class=" d-flex justify-content-between align-items-center">видеозаписей <span class="badge badge-dark">@posts.Where(p => p.published == true && p.type == type.Видео).Count()</span></p>
                     </div>
                 </div>
 
