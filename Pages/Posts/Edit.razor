@@ -7,9 +7,10 @@
     @*Заголовок страницы*@
     <h1></h1>
     @*Кнопки сохранения и отмены*@
-    <div class="form-group mb-0">
-        <input type="button" value="Сохранить" class="btn btn-primary" @onclick="()=>сохранить()"/>
-    </div>
+<div class="form-group mb-0">
+    <a class="btn btn-primary" href="/posts">Отмена</a>
+    <input type="button" value="Сохранить" class="btn btn-primary" @onclick="()=>сохранить()" />
+</div>
 </div>
 
 <EditForm Model="post">
@@ -30,22 +31,26 @@
                                 <input @bind="post.title" class="form-control"  placeholder="Название"/>
                             </div>
                             <div class="form-group">
-                                <textarea @bind="post.description" rows="2" class="form-control" placeholder="Краткое описание"/>
+                                <textarea @bind="post.description" rows="4" class="form-control" placeholder="Краткое описание"/>
                             </div>
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input asp-for="published" class="form-check-input bg-dark" id="defaultCheck1">
-                                    <label class="form-check-label" for="defaultCheck1">Опубликовать</label>
+                                    <input class="form-check-input bg-dark" type="checkbox" value="false" @bind="post.published">
+                                    <label class="form-check-label">Опубликовать</label>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label asp-for="type" class="control-label"></label>
-                                <select asp-for="type" asp-items="Html.GetEnumSelectList<type>()" class="form-control"></select>
-                            </div>
+                                <select class="form-control" @bind="тип_публикации" title="Тип публикации">
+                                    @foreach (var t in type.GetNames(typeof(type)).ToList())
+                                    {
+                                        <option class="bg-light">@t</option>
+                                    }
+                                </select>
+                            </div>                            
                             <div class="form-group">
-                                <input @bind="post.cover_image" placeholder="Url обложки" />
+                                <input @bind="post.cover_image" class="form-control" placeholder="Url обложки" />
                                 <img class="card-img mt-3" src="@post.cover_image"/>
                             </div>
                         </div>
@@ -53,11 +58,11 @@
                 </div>
                 @*Содержимое публикации*@
                 <div class="tab-pane fade" id="list-content">
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <partial name="_editor" />
-                    </div>
+                    </div>-->
                     <div class="form-group">
-                        <textarea class="form-control" rows="4" @bind="post.content" placeholder="Содержимое" />
+                        <textarea @bind="post.content" rows="10" class="form-control" placeholder="Содержимое публикации" />
                     </div>
                 </div>
             </div>
@@ -71,7 +76,7 @@
     [Parameter]
     public int ID { get; set; }
 
-    
+
     public post post = new post();
 
     protected override async Task OnInitializedAsync()
@@ -84,5 +89,16 @@
     {
         PostsService.update(post);
         NavigationManager.NavigateTo("/posts");
+    }
+    string тип_публикации
+    {
+        get
+        {
+            return post.type.ToString();
+        }
+        set
+        {
+            post.type = Enum.Parse<type>(value);
+        }
     }
 }
