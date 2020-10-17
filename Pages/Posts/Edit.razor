@@ -1,0 +1,88 @@
+﻿@page "/posts/edit/{ID:int}"
+@inject blazorControlPanel.Services.IPostsServise PostsService 
+@inject NavigationManager NavigationManager 
+
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    @*Заголовок страницы*@
+    <h1></h1>
+    @*Кнопки сохранения и отмены*@
+    <div class="form-group mb-0">
+        <input type="button" value="Сохранить" class="btn btn-primary" @onclick="()=>сохранить()"/>
+    </div>
+</div>
+
+<EditForm Model="post">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="list-group" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home">Обложка</a>
+                <a class="list-group-item list-group-item-action" id="list-content-list" data-toggle="list" href="#list-content">Содержимое</a>
+            </div>
+        </div>
+        <div class="col-md-10 mt-3 mt-md-0">
+            <div class="tab-content" id="nav-tabContent">
+                @*Обложка публикации*@
+                <div class="tab-pane fade show active" id="list-home">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <input @bind="post.title" class="form-control"  placeholder="Название"/>
+                            </div>
+                            <div class="form-group">
+                                <textarea @bind="post.description" rows="2" class="form-control" placeholder="Краткое описание"/>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input asp-for="published" class="form-check-input bg-dark" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">Опубликовать</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="type" class="control-label"></label>
+                                <select asp-for="type" asp-items="Html.GetEnumSelectList<type>()" class="form-control"></select>
+                            </div>
+                            <div class="form-group">
+                                <input @bind="post.cover_image" placeholder="Url обложки" />
+                                <img class="card-img mt-3" src="@post.cover_image"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*Содержимое публикации*@
+                <div class="tab-pane fade" id="list-content">
+                    <div class="form-group">
+                        <partial name="_editor" />
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" rows="4" @bind="post.content" placeholder="Содержимое" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+
+
+@code {  
+    [Parameter]
+    public int ID { get; set; }
+
+    
+    public post post = new post();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var posts = await PostsService.posts();
+        post = posts.FirstOrDefault(p => p.ID == ID);
+    }
+
+    void сохранить()
+    {
+        PostsService.update(post);
+        NavigationManager.NavigateTo("/posts");
+    }
+}

@@ -3,27 +3,35 @@
 @using  blazorControlPanel.Models
 
 
-@if (posts == null)
-{
-    <p>Подождите, пожалуйста!</p>
-}
-else
-{
-    <Список_постов>
-        <Опубликованные>
-            @foreach (var post in posts.Where(p => p.published == true).AsEnumerable().Reverse())
-            {
-                <Post post="post"></Post>
-            }
-        </Опубликованные>
-        <Неопубликованные>
-            @foreach (var post in posts.Where(p => p.published == false).AsEnumerable().Reverse())
-            {
-                <Post post="post"></Post>
-            }
-        </Неопубликованные>
-    </Список_постов>
-}
+<AuthorizeView Roles="редактор, администратор">
+    <Authorized>
+        @if (posts == null)
+        {
+            <p>Подождите, пожалуйста!</p>
+        }
+        else
+        {
+            <Список_постов>
+                <Опубликованные>
+                    @foreach (var post in posts.Where(p => p.published == true).AsEnumerable().Reverse())
+                    {
+                        <Post post="post"></Post>
+                    }
+                </Опубликованные>
+                <Неопубликованные>
+                    @foreach (var post in posts.Where(p => p.published == false).AsEnumerable().Reverse())
+                    {
+                        <Post post="post"></Post>
+                    }
+                </Неопубликованные>
+            </Список_постов>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p class="alert alert-danger">Для просмотра постов вы должны обладать правами редактора или администратора!</p>
+    </NotAuthorized>
+</AuthorizeView>
+
 
 
 

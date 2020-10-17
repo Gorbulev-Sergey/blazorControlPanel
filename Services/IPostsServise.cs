@@ -17,6 +17,7 @@ namespace blazorControlPanel.Services
         Task<int> delete(int id);
     }
 
+    [Authorize(Roles ="администратор, редактор")]
     public class PostsService : IPostsServise
     {
         ApplicationDbContext _context;
@@ -30,7 +31,7 @@ namespace blazorControlPanel.Services
             return await _context.posts.ToListAsync();
         }
 
-        [Authorize(Roles ="Администратор, Редактор")]
+        [Authorize(Roles ="администратор, редактор")]
         public async Task<string> create(post post)
         {
             if (post != null)
@@ -42,7 +43,7 @@ namespace blazorControlPanel.Services
             return "Не сохранена";
         }
 
-        [Authorize(Roles = "Администратор, Редактор")]
+        [Authorize(Roles = "администратор, редактор")]
         public async Task<int> update(post post)
         {
             _context.Entry(post).State = EntityState.Modified;            

@@ -228,10 +228,10 @@
     {
         var user = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User;
 
-        new_post.userId = (await userManager.FindByNameAsync(user.Identity.Name)).Id;
-        публикация_сохранена = await PostsService.create(new_post);
-        new_post = new post();
-        await InvokeAsync(StateHasChanged);
+            new_post.userId = (await userManager.FindByNameAsync(user.Identity.Name)).Id;
+            публикация_сохранена = await PostsService.create(new_post);
+            new_post = new post();
+            await InvokeAsync(StateHasChanged);        
     }
 }
 
