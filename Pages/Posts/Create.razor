@@ -1,16 +1,17 @@
-﻿@page "/posts/edit/{ID:int}"
-@inject blazorControlPanel.Services.IPostsServise PostsService 
-@inject NavigationManager NavigationManager 
+﻿@page "/posts/create"
+@inject blazorControlPanel.Services.IPostsServise PostsService
+@inject NavigationManager NavigationManager
+
 
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     @*Заголовок страницы*@
     <h1></h1>
     @*Кнопки сохранения и отмены*@
-<div class="form-group mb-0">
-    <a class="btn btn-primary" href="/posts">Отмена</a>
-    <input type="button" value="Сохранить" class="btn btn-primary" @onclick="()=>сохранить()" />
-</div>
+    <div class="form-group mb-0">
+        <a class="btn btn-primary" href="/posts">Отмена</a>
+        <input type="button" value="Сохранить" class="btn btn-primary" @onclick="()=>сохранить()" />
+    </div>
 </div>
 
 <EditForm Model="post">
@@ -28,13 +29,13 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <input @bind="post.title" class="form-control"  placeholder="Название"/>
+                                <input @bind="post.title" class="form-control" placeholder="Название" />
                             </div>
                             <div class="form-group">
-                                <textarea @bind="post.description" rows="4" class="form-control" placeholder="Краткое описание"/>
+                                <textarea @bind="post.description" rows="4" class="form-control" placeholder="Краткое описание" />
                             </div>
                             <div class="form-group">
-                                <div class="form-check">                                    
+                                <div class="form-check">
                                     <input id="is_published" class="form-check-input bg-dark" type="checkbox" value="false" @bind="post.published">
                                     <label for="is_published" class="form-check-label">Опубликовать</label>
                                 </div>
@@ -48,10 +49,10 @@
                                         <option class="bg-light">@t</option>
                                     }
                                 </select>
-                            </div>                            
+                            </div>
                             <div class="form-group">
                                 <input @bind="post.cover_image" class="form-control" placeholder="Url обложки" />
-                                <img class="card-img mt-3" src="@post.cover_image"/>
+                                <img class="card-img mt-3" src="@post.cover_image" />
                             </div>
                         </div>
                     </div>
@@ -72,22 +73,15 @@
 
 
 
-@code {  
+@code {
     [Parameter]
     public int ID { get; set; }
 
 
     public post post = new post();
-
-    protected override async Task OnInitializedAsync()
-    {
-        var posts = await PostsService.posts();
-        post = posts.FirstOrDefault(p => p.ID == ID);
-    }
-
     void сохранить()
     {
-        PostsService.update(post);
+        PostsService.create(post);
         NavigationManager.NavigateTo("/posts");
     }
     string тип_публикации
@@ -101,4 +95,5 @@
             post.type = Enum.Parse<type>(value);
         }
     }
+    
 }

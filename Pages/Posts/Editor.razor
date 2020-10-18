@@ -1,0 +1,268 @@
+﻿@inject IJSRuntime JSRuntime
+
+
+<div class="btn-toolbar">
+    <!--Отменить, Повторить-->
+    <div class="btn-group mr-1 mb-1">
+        <button type="button" class="btn btn-light" onclick="document.execCommand( 'undo', null, null );"><i class="fas fa-undo"></i></button>
+        <button type="button" class="btn btn-light" onclick="document.execCommand( 'redo', null, null );"><i class="fas fa-redo"></i></button>
+    </div>
+    <!--Стили-->
+    <div class="btn-group mr-1 mb-1">
+        <div class="dropdown d-inline">
+            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownStile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Обычный
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownStile">
+                <a class="dropdown-item" href="#" onclick="dropdownStile.innerHTML = this.innerHTML; clear_formate();">Очистить стиль</a>
+                <a class="dropdown-item" href="#" onclick="dropdownStile.innerHTML = this.innerHTML; document.execCommand( 'formatBlock', null, 'P' );">Обычный</a>
+                <a class="dropdown-item" href="#" onclick="dropdownStile.innerHTML = $(this).children().first().html(); document.execCommand('formatBlock', null, 'H1');"><h1>Заголовок 1</h1></a>
+                <a class="dropdown-item" href="#" onclick="dropdownStile.innerHTML = $(this).children().first().html(); document.execCommand( 'formatBlock', null, 'H2' );"><h2>Заголовок 2</h2></a>
+                <a class="dropdown-item" href="#" onclick="dropdownStile.innerHTML = $(this).children().first().html(); document.execCommand( 'formatBlock', null, 'H3' );"><h3>Заголовок 3</h3></a>
+                <a class="dropdown-item" href="#" onclick="dropdownStile.innerHTML = $(this).children().first().html(); document.execCommand( 'formatBlock', null, 'H4' );"><h4>Заголовок 4</h4></a>
+            </div>
+        </div>
+    </div>
+    <!--Названия шрифтов-->
+    <div class="btn-group mr-1 mb-1">
+        <div class="dropdown d-inline">
+            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownFonts" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Segoe UI
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownFonts">
+                <a class="dropdown-item" href="#" style="font-family:Arial" onclick="dropdownFonts.innerHTML = this.innerHTML; document.execCommand( 'fontName',null,'Arial')">Arial</a>
+                <a class="dropdown-item" href="#" style="font-family:Consolas" onclick="dropdownFonts.innerHTML = this.innerHTML; document.execCommand( 'fontName',null,'Consolas')">Consolas</a>
+                <a class="dropdown-item" href="#" style="font-family:'Roboto'" onclick="dropdownFonts.innerHTML = this.innerHTML; document.execCommand( 'fontName',null,'Roboto')">Roboto</a>
+                <a class="dropdown-item" href="#" style="font-family:'Segoe UI'" onclick="dropdownFonts.innerHTML = this.innerHTML; document.execCommand( 'fontName',null,'Segoe UI')">Segoe UI</a>
+                <a class="dropdown-item" href="#" style="font-family:'Times New Roman'" onclick="dropdownFonts.innerHTML = this.innerHTML; document.execCommand( 'fontName',null,'Times New Roman')">Times N.R.</a>
+            </div>
+        </div>
+    </div>
+    <!--Размер шрифтов-->
+    <div class="btn-group mr-1 mb-1">
+        <div class="dropdown d-inline">
+            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownSize" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                14 pt
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 1)">10 pt</a>
+                <a class="dropdown-item" href="#" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 2)">12 pt</a>
+                <a class="dropdown-item" href="#" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 3)">14 pt</a>
+                <a class="dropdown-item" href="#" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 4)">16 pt</a>
+                <a class="dropdown-item" href="#" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 5)">18 pt</a>
+                <a class="dropdown-item" href="#" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 6)">22 pt</a>
+                <a class="dropdown-item" href="#" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 7)">24 pt</a>
+            </div>
+        </div>
+    </div>
+    <!--Жирный, курсив, подчёркнутый-->
+    <div class="btn-group mr-1 mb-1">
+        <button type="button" class="btn btn-light" onclick="document.execCommand( 'bold', null, null );"><i class="fas fa-bold"></i></button>
+        <button type="button" class="btn btn-light" onclick="document.execCommand( 'italic', null, null );"><i class="fas fa-italic"></i></button>
+        <button type="button" class="btn btn-light" onclick="document.execCommand( 'underline', null, null );"><i class="fas fa-underline"></i></button>
+    </div>
+    <!--Выравнивание текста-->
+    <div class="btn-group btn-group-toggle mr-1 mb-1" data-toggle="buttons">
+        <label class="btn btn-light active">
+            <input type="radio" name="options" id="option1" autocomplete="off" checked> <i class="fas fa-align-left" onclick="document.execCommand( 'justifyLeft', null, null );"></i>
+        </label>
+        <label class="btn btn-light">
+            <input type="radio" name="options" id="option2" autocomplete="off"> <i class="fas fa-align-center" onclick="document.execCommand( 'justifyCenter', null, null );"></i>
+        </label>
+        <label class="btn btn-light">
+            <input type="radio" name="options" id="option3" autocomplete="off"> <i class="fas fa-align-right" onclick="document.execCommand( 'justifyRight', null, null );"></i>
+        </label>
+        <label class="btn btn-light">
+            <input type="radio" name="options" id="option4" autocomplete="off"> <i class="fas fa-align-justify" onclick="document.execCommand( 'justifyFull', null, null );"></i>
+        </label>
+    </div>
+    <!--Списки-->
+    <div class="btn-group mr-1 mb-1">
+        <button type="button" class="btn btn-light" onclick="document.execCommand( 'insertOrderedList',null,null)"><i class="fas fa-list-ol"></i></button>
+        <button type="button" class="btn btn-light" onclick="document.execCommand( 'insertUnorderedList',null,null)"><i class="fas fa-list-ul"></i></button>
+    </div>
+    <!--Изображение, видео, ссылка-->
+    <div class="btn-group mr-1 mb-1">
+        <button type="button" class="btn btn-light" onclick="range=window.getSelection().getRangeAt(0); $('#modal_insert_link').modal()"><i class="fas fa-link"></i></button>
+        <button type="button" class="btn btn-light" onclick="range=window.getSelection().getRangeAt(0); $('#modal_insert_picture').modal()"><i class="far fa-image"></i></button>
+        <button type="button" class="btn btn-light" onclick="range=window.getSelection().getRangeAt(0); $('#modal_insert_video').modal()"><i class="fab fa-youtube"></i></button>
+    </div>
+    <!--Кнопка отображения html содержимого редактора-->
+    <div class="btn-group mr-1 mb-1">
+        <button type="button" class="btn btn-light" onclick="show_code(this, $('#content_fake')); $(this).parent().parent().children().not(':last').toggle('disabled')"><i class="fas fa-code"></i></button>
+    </div>
+</div>
+
+
+@*Модальные окна*@
+@*Модальное окно кставить изображение*@
+<div class="modal fade" id="modal_insert_picture" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Вставка изображения</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="modal_url_image">Url:</label>
+                    <input type="url" class="form-control" id="modal_url_image" oninput="$('#modal_parent_image').children().first().attr('src', $(this).val())">
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label for="modal_select_image-width">Размер:</label>
+                            <select class="form-control" id="modal_select_image-width" onchange="$('#modal_parent_image').children().first().css('width', $(this).val());">
+                                <option value="25%">25%</option>
+                                <option value="40%">40%</option>
+                                <option value="50%">50%</option>
+                                <option value="60%">60%</option>
+                                <option value="80%">80%</option>
+                                <option value="90%" selected>90%</option>
+                                <option value="100%">100%</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="modal_image_orientation">Расположение:</label><br />
+                            <div id="modal_image_orientation" class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-light">
+                                    <input type="radio" name="options" id="option1" autocomplete="off" checked><i class="fas fa-align-left" onclick="$('#modal_parent_image').children().first().removeClass('ml-auto mr-auto ml-0 mr-0').addClass('ml-0 mr-auto')"></i>
+                                </label>
+                                <label class="btn btn-light active">
+                                    <input type="radio" name="options" id="option2" autocomplete="off"><i class="fas fa-align-center" onclick="$('#modal_parent_image').children().first().removeClass('ml-auto mr-auto ml-0 mr-0').addClass('ml-auto mr-auto')"></i>
+                                </label>
+                                <label class="btn btn-light">
+                                    <input type="radio" name="options" id="option3" autocomplete="off"><i class="fas fa-align-right" onclick="$('#modal_parent_image').children().first().removeClass('ml-auto mr-auto ml-0 mr-0').addClass('ml-auto mr-0')"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="modal_parent_image" class="form-group">
+                    <img style="width:90%" class="card-img d-block ml-auto mr-auto mt-3 mb-3" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="insert_object($('#content_fake'), $('#modal_parent_image').children().first()); $('#modal_url_image').val(''); $('#modal_parent_image').children().first().attr('src', ''); $('#modal_insert_picture').modal('hide')">Вставить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Модальное окно вставить видео*@
+<div class="modal fade" id="modal_insert_video" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Вставка видео</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="modal_url_video">Url:</label>
+                    <input type="url" class="form-control" id="modal_url_video" oninput="$('#modal_parent_video').children().first().children().first().attr('src', this.value.replace('youtu.be','www.youtube.com/embed')+'?rel=0')">
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label for="modal_select_video_relation">Пропорции:</label>
+                            <select class="form-control" id="modal_select_video_relation" onchange="$('#modal_parent_video').children().first().removeClass('embed-responsive-1by1 embed-responsive-4by3 embed-responsive-16by9 embed-responsive-21by9').addClass($(this).val())">
+                                <option value="embed-responsive-1by1">1 к 1</option>
+                                <option value="embed-responsive-4by3">4 к 3</option>
+                                <option value="embed-responsive-16by9" selected>16 к 9</option>
+                                <option value="embed-responsive-21by9">21 к 9</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="modal_select_video_width">Размер:</label>
+                            <select class="form-control" id="modal_select_video_width" onchange="$('#modal_parent_video').children().first().css('width', $(this).val());">
+                                <option value="25%">25%</option>
+                                <option value="40%">40%</option>
+                                <option value="50%">50%</option>
+                                <option value="60%">60%</option>
+                                <option value="80%" selected>80%</option>
+                                <option value="90%">90%</option>
+                                <option value="100%">100%</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="modal_video_orientation">Расположение:</label><br />
+                            <div id="modal_video_orientation" class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-light">
+                                    <input type="radio" name="options" id="option1" autocomplete="off" checked><i class="fas fa-align-left" onclick="$('#modal_parent_video').children().first().removeClass('mr-auto ml-auto mr-0 ml-0').addClass('mr-auto ml-0')"></i>
+                                </label>
+                                <label class="btn btn-light active">
+                                    <input type="radio" name="options" id="option2" autocomplete="off"><i class="fas fa-align-center" onclick="$('#modal_parent_video').children().first().removeClass('mr-auto ml-auto mr-0 ml-0').addClass('mr-auto ml-auto')"></i>
+                                </label>
+                                <label class="btn btn-light">
+                                    <input type="radio" name="options" id="option3" autocomplete="off"><i class="fas fa-align-right" onclick="$('#modal_parent_video').children().first().removeClass('mr-auto ml-auto mr-0 ml-0').addClass('mr-0 ml-auto')"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="modal_parent_video" class="form-group">
+                    <div class="embed-responsive embed-responsive-16by9 d-block mr-auto ml-auto mt-3 mb-3" style="width:80%">
+                        <iframe class="embed-responsive-item" src="" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="insert_object($('#content_fake'), $('#modal_parent_video').children().first()); $('#modal_url_video').val(''); $('#modal_parent_video').children().first().children().first().attr('src', ''); $('#modal_insert_video').modal('hide')">Вставить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Модальное окно вставить ссылку*@
+<div class="modal fade" id="modal_insert_link" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Вставка ссылки</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="modal_link_text">Текст ссылки:</label>
+                    <input class="form-control" id="modal_link_text" oninput="$('#modal_parent_link').children().first().html($(this).val())" />
+                    <label for="modal_link_url">Url ссылки:</label>
+                    <input type="url" class="form-control" id="modal_link_url" oninput="$('#modal_parent_link').children().first().attr('href', $(this).val())">
+                </div>
+                <div id="modal_parent_link" class="form-group">
+                    <a href=""></a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="insert_object($('#content_fake'), $('#modal_parent_link').children().first()); $('#modal_link_text').val(''); $('#modal_link_url').val(''); $('#modal_parent_link').children().first().attr('href', '').html(''); $('#modal_insert_link').modal('hide')">Вставить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code{
+    // Далее идут методы, которые подключают javascript для работы редактора
+    async Task clear_formate()
+    {
+        await JSRuntime.InvokeVoidAsync("clear_formate");
+    }
+
+    async Task insert_object()
+    {
+        await JSRuntime.InvokeVoidAsync("insert_object");
+    }
+
+    async Task show_code()
+    {
+        await JSRuntime.InvokeVoidAsync("show_code");
+    }
+}
