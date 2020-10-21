@@ -1,4 +1,25 @@
-﻿/*Функция, которая очищает формат*/
+﻿// Функция, которая возвращает содержимое элемента редактора (div contenteditable=true)
+var editor_html = function (editor_id) {
+    return $(editor_id).html();
+};
+// Функция, которая возвращает содержимое элемента редактора (div contenteditable=true)
+var editor_html = function () {
+    return $("#editor").html();
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Функция, которая очищает формат*/
 var clear_formate = function () {
     var selectedElement = window.getSelection().focusNode.parentNode;
     $(selectedElement).removeAttr();
@@ -30,4 +51,4 @@ var show_code = function (send, jq_editor) {
         $(jq_editor).css('white-space', 'pre-wrap');
         $(jq_editor).text($(jq_editor).html());
     }
-}
+};

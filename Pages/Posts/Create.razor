@@ -1,7 +1,7 @@
 ﻿@page "/posts/create"
 @inject blazorControlPanel.Services.IPostsServise PostsService
 @inject NavigationManager NavigationManager
-
+@inject IJSRuntime JSRuntime
 
 
 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -52,7 +52,7 @@
                             </div>
                             <div class="form-group">
                                 <input @bind="post.cover_image" class="form-control" placeholder="Url обложки" />
-                                <img class="card-img mt-3" src="@post.cover_image" />
+                                <img class="card-img mt-3" src="@post.cover_image"  />
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         <Editor></Editor>
                     </div>
                     <div class="form-group">
-                        <textarea @bind="post.content" rows="10" class="form-control" placeholder="Содержимое публикации" />
+                        <div id="editor" class="form-control h-auto" style="min-height:300px" contenteditable="true"></div>
                     </div>
                 </div>
             </div>
@@ -79,9 +79,11 @@
 
 
     public post post = new post();
-    void сохранить()
+    async Task сохранить()
     {
-        PostsService.create(post);
+        post.content = await JSRuntime.InvokeAsync<string>("editor_html", "#editor");
+        //post.content = await JSRuntime.InvokeAsync<string>("content_html", null);
+        await PostsService.create(post);
         NavigationManager.NavigateTo("/posts");
     }
     string тип_публикации
@@ -95,5 +97,4 @@
             post.type = Enum.Parse<type>(value);
         }
     }
-    
 }
