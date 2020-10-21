@@ -13,12 +13,12 @@
                 Обычный
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownStile">
-                <a class="dropdown-item" href="#" onclick="dropdownStile.innerHTML = this.innerHTML; clear_formate();">Очистить стиль</a>
-                <a class="dropdown-item" href="#" onclick="dropdownStile.innerHTML = this.innerHTML; document.execCommand( 'formatBlock', null, 'P' );">Обычный</a>
-                <a class="dropdown-item" href="#" onclick="dropdownStile.innerHTML = $(this).children().first().html(); document.execCommand('formatBlock', null, 'H1');"><h1>Заголовок 1</h1></a>
-                <a class="dropdown-item" href="#" onclick="dropdownStile.innerHTML = $(this).children().first().html(); document.execCommand( 'formatBlock', null, 'H2' );"><h2>Заголовок 2</h2></a>
-                <a class="dropdown-item" href="#" onclick="dropdownStile.innerHTML = $(this).children().first().html(); document.execCommand( 'formatBlock', null, 'H3' );"><h3>Заголовок 3</h3></a>
-                <a class="dropdown-item" href="#" onclick="dropdownStile.innerHTML = $(this).children().first().html(); document.execCommand( 'formatBlock', null, 'H4' );"><h4>Заголовок 4</h4></a>
+                <button class="dropdown-item" onclick="dropdownStile.innerHTML = this.innerHTML; clear_formate();">Очистить стиль</button>
+                <button class="dropdown-item" onclick="dropdownStile.innerHTML = $(this).children().first().html(); document.execCommand('formatBlock', null, 'H1');"><h1>Заголовок 1</h1></button>
+                <button class="dropdown-item" onclick="dropdownStile.innerHTML = $(this).children().first().html(); document.execCommand( 'formatBlock', null, 'H2' );"><h2>Заголовок 2</h2></button>
+                <button class="dropdown-item" onclick="dropdownStile.innerHTML = this.innerHTML; document.execCommand( 'formatBlock', null, 'P' );">Обычный</button>
+                <button class="dropdown-item" onclick="dropdownStile.innerHTML = $(this).children().first().html(); document.execCommand( 'formatBlock', null, 'H3' );"><h3>Заголовок 3</h3></button>
+                <button class="dropdown-item" onclick="dropdownStile.innerHTML = $(this).children().first().html(); document.execCommand( 'formatBlock', null, 'H4' );"><h4>Заголовок 4</h4></button>
             </div>
         </div>
     </div>
@@ -29,11 +29,11 @@
                 Segoe UI
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownFonts">
-                <a class="dropdown-item" href="#" style="font-family:Arial" onclick="dropdownFonts.innerHTML = this.innerHTML; document.execCommand( 'fontName',null,'Arial')">Arial</a>
-                <a class="dropdown-item" href="#" style="font-family:Consolas" onclick="dropdownFonts.innerHTML = this.innerHTML; document.execCommand( 'fontName',null,'Consolas')">Consolas</a>
-                <a class="dropdown-item" href="#" style="font-family:'Roboto'" onclick="dropdownFonts.innerHTML = this.innerHTML; document.execCommand( 'fontName',null,'Roboto')">Roboto</a>
-                <a class="dropdown-item" href="#" style="font-family:'Segoe UI'" onclick="dropdownFonts.innerHTML = this.innerHTML; document.execCommand( 'fontName',null,'Segoe UI')">Segoe UI</a>
-                <a class="dropdown-item" href="#" style="font-family:'Times New Roman'" onclick="dropdownFonts.innerHTML = this.innerHTML; document.execCommand( 'fontName',null,'Times New Roman')">Times N.R.</a>
+                <button class="dropdown-item" style="font-family:Arial" onclick="dropdownFonts.innerHTML = this.innerHTML; document.execCommand( 'fontName',null,'Arial')">Arial</button>
+                <button class="dropdown-item" style="font-family:Consolas" onclick="dropdownFonts.innerHTML = this.innerHTML; document.execCommand( 'fontName',null,'Consolas')">Consolas</button>
+                <button class="dropdown-item" style="font-family:'Roboto'" onclick="dropdownFonts.innerHTML = this.innerHTML; document.execCommand( 'fontName',null,'Roboto')">Roboto</button>
+                <button class="dropdown-item" style="font-family:'Segoe UI'" onclick="dropdownFonts.innerHTML = this.innerHTML; document.execCommand( 'fontName',null,'Segoe UI')">Segoe UI</button>
+                <button class="dropdown-item" style="font-family:'Times New Roman'" onclick="dropdownFonts.innerHTML = this.innerHTML; document.execCommand( 'fontName',null,'Times New Roman')">Times N.R.</button>
             </div>
         </div>
     </div>
@@ -44,13 +44,13 @@
                 14 pt
             </button>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="#" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 1)">10 pt</a>
-                <a class="dropdown-item" href="#" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 2)">12 pt</a>
-                <a class="dropdown-item" href="#" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 3)">14 pt</a>
-                <a class="dropdown-item" href="#" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 4)">16 pt</a>
-                <a class="dropdown-item" href="#" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 5)">18 pt</a>
-                <a class="dropdown-item" href="#" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 6)">22 pt</a>
-                <a class="dropdown-item" href="#" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 7)">24 pt</a>
+                <button class="dropdown-item" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 1)">10 pt</button>
+                <button class="dropdown-item" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 2)">12 pt</button>
+                <button class="dropdown-item" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 3)">14 pt</button>
+                <button class="dropdown-item" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 4)">16 pt</button>
+                <button class="dropdown-item" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 5)">18 pt</button>
+                <button class="dropdown-item" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 6)">22 pt</button>
+                <button class="dropdown-item" onclick="dropdownSize.innerHTML = this.innerHTML; document.execCommand( 'fontSize',null, 7)">24 pt</button>
             </div>
         </div>
     </div>
