@@ -3,6 +3,7 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject blazorControlPanel.Services.IPostsServise PostsService
 @inject Microsoft.AspNetCore.Identity.UserManager<user> userManager;
+@inject IViewBag ViewBag
 
 <AuthorizeView>
     <Authorized>
@@ -44,7 +45,6 @@
         </p>
     }
 }
-
 
 <div class="row">
     @*Новая публикация*@
@@ -216,7 +216,9 @@
 
     protected override async Task OnInitializedAsync()
     {
+        ViewBag.заголовок_страницы = "Главная";
         posts = (await PostsService.posts());
+        ViewBag.Обновить_заголовок();
     }
 
     private void set_post_type(type type)
@@ -228,10 +230,10 @@
     {
         var user = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User;
 
-            new_post.userId = (await userManager.FindByNameAsync(user.Identity.Name)).Id;
-            публикация_сохранена = await PostsService.create(new_post);
-            new_post = new post();
-            await InvokeAsync(StateHasChanged);        
+        new_post.userId = (await userManager.FindByNameAsync(user.Identity.Name)).Id;
+        публикация_сохранена = await PostsService.create(new_post);
+        new_post = new post();
+        await InvokeAsync(StateHasChanged);
     }
 }
 

@@ -1,6 +1,6 @@
 ﻿@page "/posts"
-@inject blazorControlPanel.Services.IPostsServise PostsService
-@using  blazorControlPanel.Models
+@inject IPostsServise PostsService
+@inject IViewBag ViewBag
 
 
 <AuthorizeView Roles="редактор, администратор">
@@ -42,6 +42,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        ViewBag.заголовок_страницы = "Публикации";
         posts = await PostsService.posts();
+        ViewBag.Обновить_заголовок();
     }
 }
