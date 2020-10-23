@@ -18,6 +18,13 @@
         }
     </select>
 
+    <select class="btn btn-light" @bind="дата" title="Порядок сортировки">
+        @foreach (var t in type.GetNames(typeof(фильтр_дата)).ToList())
+        {
+            <option class="bg-light" value="@t.Replace("_"," ")">@t.Replace("_"," ")</option>
+        }
+    </select>
+
 </div>
 
 <Список_постов2 posts="filtred_posts"></Список_постов2>
@@ -31,16 +38,17 @@
     protected override async Task OnInitializedAsync()
     {
         ViewBag.заголовок_страницы = "Публикации";
-        filtred_posts = posts = await PostsService.posts();
+        posts = await PostsService.posts();
+        фильтровать(_видимость, _тип, _дата);
     }
-
-
 
     enum фильтр_видимость { все, опубликованные, неопубликованные }
     enum фильтр_тип { все, объявления, новости, статьи, видео }
+    enum фильтр_дата { сначала_новые, сначала_старые }
 
     string _видимость = "все";
     string _тип = "все";
+    string _дата = "сначала новые";
 
     string видимость
     {
@@ -51,7 +59,7 @@
         set
         {
             _видимость = value;
-            фильтровать(_видимость,_тип);
+            фильтровать(_видимость, _тип, _дата);
         }
     }
     string тип
@@ -63,11 +71,23 @@
         set
         {
             _тип = value;
-            фильтровать(_видимость, _тип);
+            фильтровать(_видимость, _тип, _дата);
+        }
+    }
+    string дата
+    {
+        get
+        {
+            return _дата;
+        }
+        set
+        {
+            _дата = value;
+            фильтровать(_видимость, _тип, _дата);
         }
     }
 
-    void фильтровать(string видимость, string тип)
+    void фильтровать(string видимость, string тип, string дата)
     {
         if (видимость != "все")
         {
@@ -104,6 +124,16 @@
                     break;
             }
         }
+
+        if (дата == "сначала новые")
+        {
+            filtred_posts = filtred_posts.OrderBy(p => p.updated).Reverse().ToList();
+        }
+        else
+        {
+            filtred_posts = filtred_posts.OrderBy(p => p.updated).ToList();
+        }
+
 
         PostsService.Изменить_фильтр();
     }
