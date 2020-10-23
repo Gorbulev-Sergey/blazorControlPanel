@@ -1,0 +1,23 @@
+﻿@inject IPostsServise PostsServise
+
+<div class="mb-3">
+    @foreach (var post in posts)
+    {
+        <Post post="post"></Post>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public List<post> posts { get; set; }
+
+    protected override void OnInitialized()
+    {
+        PostsServise.Фильтр_изменён += обновить_меня;
+    }
+
+    void обновить_меня()
+    {
+        StateHasChanged();
+    }
+}

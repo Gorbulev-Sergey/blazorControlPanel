@@ -1,5 +1,6 @@
 ﻿@page "/posts/create"
-@inject blazorControlPanel.Services.IPostsServise PostsService
+@inject IPostsServise PostsService
+@inject IViewBag ViewBag 
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
 
@@ -77,6 +78,10 @@
     [Parameter]
     public int ID { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        ViewBag.заголовок_страницы = "Создать публикацию";
+    }
 
     public post post = new post();
     async Task сохранить()

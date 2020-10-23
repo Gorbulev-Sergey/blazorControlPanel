@@ -61,8 +61,8 @@
         }
     }
 
-    void удалить_публикацию()
+    async Task удалить_публикацию()
     {
-        PostsService.delete(post.ID);
+        await PostsService.delete(post.ID);
     }
 }

@@ -1,14 +1,14 @@
-﻿<div class="accordion mb-3" id="posts">
-    <nav class="d-flex align-items-center mb-3">
-        <button class="btn btn-dark mr-3" type="button" data-toggle="collapse" data-target="#published" aria-expanded="true">Опубликованные</button>
-        <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#notpublished" aria-expanded="false">Неопубликованные</button>
-    </nav>   
-        <div class="collapse show" id="published" data-parent="#posts">            
-                @Опубликованные            
-        </div>
-        <div class="collapse" id="notpublished" data-parent="#posts">
-                @Неопубликованные
-        </div>    
+﻿<ul class="nav nav-pills mb-3" id="posts">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="pill" href="#published" aria-selected="true">Опубликованные</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="pill" href="#notpublished" aria-selected="false">Неопубликованные</a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="published">@Опубликованные</div>
+    <div class="tab-pane fade" id="notpublished">@Неопубликованные</div>
 </div>
 
 @code {

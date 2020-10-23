@@ -2,47 +2,109 @@
 @inject IPostsServise PostsService
 @inject IViewBag ViewBag
 
+<div class="mb-3">
 
-<AuthorizeView Roles="редактор, администратор">
-    <Authorized>
-        @if (posts == null)
+    <select class="btn btn-light" @bind="видимость" title="Опубликована/Неопубликована">
+        @foreach (var t in type.GetNames(typeof(фильтр_видимость)).ToList())
         {
-            <p>Подождите, пожалуйста!</p>
+            <option class="bg-light" value="@t">@t</option>
         }
-        else
+    </select>
+
+    <select class="btn btn-light" @bind="тип" title="Тип публикации">
+        @foreach (var t in type.GetNames(typeof(фильтр_тип)).ToList())
         {
-            <Список_постов>
-                <Опубликованные>
-                    @foreach (var post in posts.Where(p => p.published == true).AsEnumerable().Reverse())
-                    {
-                        <Post post="post"></Post>
-                    }
-                </Опубликованные>
-                <Неопубликованные>
-                    @foreach (var post in posts.Where(p => p.published == false).AsEnumerable().Reverse())
-                    {
-                        <Post post="post"></Post>
-                    }
-                </Неопубликованные>
-            </Список_постов>
+            <option class="bg-light" value="@t">@t</option>
         }
-    </Authorized>
-    <NotAuthorized>
-        <p class="alert alert-danger">Для просмотра постов вы должны обладать правами редактора или администратора!</p>
-    </NotAuthorized>
-</AuthorizeView>
+    </select>
 
+</div>
 
-
+<Список_постов2 posts="filtred_posts"></Список_постов2>
 
 
 
 @code{
-    List<post> posts;
+    List<post> posts = new List<post>();
+    List<post> filtred_posts = new List<post>();
 
     protected override async Task OnInitializedAsync()
     {
         ViewBag.заголовок_страницы = "Публикации";
-        posts = await PostsService.posts();
+        filtred_posts = posts = await PostsService.posts();
+    }
+
+
+
+    enum фильтр_видимость { все, опубликованные, неопубликованные }
+    enum фильтр_тип { все, объявления, новости, статьи, видео }
+
+    string _видимость = "все";
+    string _тип = "все";
+
+    string видимость
+    {
+        get
+        {
+            return _видимость;
+        }
+        set
+        {
+            _видимость = value;
+            фильтровать(_видимость,_тип);
+        }
+    }
+    string тип
+    {
+        get
+        {
+            return _тип;
+        }
+        set
+        {
+            _тип = value;
+            фильтровать(_видимость, _тип);
+        }
+    }
+
+    void фильтровать(string видимость, string тип)
+    {
+        if (видимость != "все")
+        {
+            switch (видимость)
+            {
+                case "опубликованные":
+                    filtred_posts = posts.Where(p => p.published == true).ToList();
+                    break;
+                case "неопубликованные":
+                    filtred_posts = posts.Where(p => p.published == false).ToList();
+                    break;
+            }
+        }
+        else
+        {
+            filtred_posts = posts;
+        }
+
+        if (тип != "все")
+        {
+            switch (тип)
+            {
+                case "объявления":
+                    filtred_posts = filtred_posts.Where(p => p.type == type.Объявление).ToList();
+                    break;
+                case "новости":
+                    filtred_posts = filtred_posts.Where(p => p.type == type.Новость).ToList();
+                    break;
+                case "статьи":
+                    filtred_posts = filtred_posts.Where(p => p.type == type.Статья).ToList();
+                    break;
+                case "видео":
+                    filtred_posts = filtred_posts.Where(p => p.type == type.Видео).ToList();
+                    break;
+            }
+        }
+
+        PostsService.Изменить_фильтр();
     }
 }

@@ -15,12 +15,16 @@ namespace blazorControlPanel.Services
         Task<string> create(post post);
         Task<int> update(post post);
         Task<int> delete(int id);
+
+        event Action Фильтр_изменён;
+        void Изменить_фильтр();
     }
 
     [Authorize(Roles ="администратор, редактор")]
     public class PostsService : IPostsServise
     {
-        ApplicationDbContext _context;
+        ApplicationDbContext _context;        
+
         public PostsService(ApplicationDbContext context)
         {
             _context = context;
@@ -55,6 +59,12 @@ namespace blazorControlPanel.Services
         {
             _context.posts.Remove(_context.posts.FirstOrDefault(p=>p.ID==id));
             return await _context.SaveChangesAsync();
+        }
+
+        public event Action Фильтр_изменён;
+        public void Изменить_фильтр()
+        {
+            Фильтр_изменён?.Invoke();
         }
     }
 }

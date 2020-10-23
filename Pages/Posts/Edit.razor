@@ -1,5 +1,6 @@
 ﻿@page "/posts/edit/{ID:int}"
-@inject blazorControlPanel.Services.IPostsServise PostsService
+@inject IPostsServise PostsService
+@inject IViewBag ViewBag
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
 
@@ -81,6 +82,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        ViewBag.заголовок_страницы = "Редактировать публикацию";
         var posts = await PostsService.posts();
         post = posts.FirstOrDefault(p => p.ID == ID);
     }

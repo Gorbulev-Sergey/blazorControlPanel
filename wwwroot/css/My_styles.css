@@ -3,6 +3,15 @@
     width: 30px;
 }
 
+.nav-pills .nav-item .nav-link {
+    color: #343a40 !important;
+}
+
+.nav-pills .nav-item .active {
+    background-color: #343a40 !important;
+    color: white !important;
+}
+
 @media screen and (min-width:768px) {
     body {
         margin: 0;
