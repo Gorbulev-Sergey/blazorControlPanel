@@ -1,0 +1,21 @@
+﻿@page "/users"
+@inject Microsoft.AspNetCore.Identity.UserManager<user> userManager
+@inject IViewBag ViewBag
+
+
+<div>
+    @foreach (var user in userManager.Users)
+    {
+        <div class="mb-3">
+            <div class="col">@user.UserName</div>
+        </div>
+    }
+</div>
+
+
+@code {
+    protected override void OnInitialized()
+    {
+        ViewBag.заголовок_страницы = "Пользователи";
+    }
+}

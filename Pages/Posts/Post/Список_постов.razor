@@ -1,20 +1,23 @@
-﻿<ul class="nav nav-pills mb-3" id="posts">
-    <li class="nav-item">
-        <a class="nav-link active" data-toggle="pill" href="#published" aria-selected="true">Опубликованные</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-toggle="pill" href="#notpublished" aria-selected="false">Неопубликованные</a>
-    </li>
-</ul>
-<div class="tab-content">
-    <div class="tab-pane fade show active" id="published">@Опубликованные</div>
-    <div class="tab-pane fade" id="notpublished">@Неопубликованные</div>
+﻿@inject IPostsServise PostsServise
+
+<div class="mb-3">
+    @foreach (var post in posts)
+    {
+        <Post post="post"></Post>
+    }
 </div>
 
 @code {
     [Parameter]
-    public RenderFragment Опубликованные { get; set; }
+    public List<post> posts { get; set; }
 
-    [Parameter]
-    public RenderFragment Неопубликованные { get; set; }
+    protected override void OnInitialized()
+    {
+        PostsServise.Фильтр_изменён += обновить_меня;
+    }
+
+    void обновить_меня()
+    {
+        StateHasChanged();
+    }
 }

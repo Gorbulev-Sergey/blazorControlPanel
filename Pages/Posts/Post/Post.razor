@@ -1,4 +1,4 @@
-﻿@inject blazorControlPanel.Services.IPostsServise PostsService 
+﻿@inject IPostsServise PostsServise
 
 <EditForm Model="post">
     <div class="row mb-2 border-top pt-2">
@@ -9,21 +9,21 @@
             @((MarkupString)post.description)
         </div>
         <div class="col-4">
-                <div class="btn-group">
-                    <select class="btn btn-light" @bind="тип_публикации" title="Тип публикации">
-                        @foreach (var t in type.GetNames(typeof(type)).ToList())
-                        {
-                            <option class="bg-light">@t</option>
-                        }
-                    </select>
-                    <select class="btn btn-light" @bind="публикация_опубликована" title="Опубликована/Неопубликована">
-                        <option class="bg-light" value="true">Опубликована</option>
-                        <option class="bg-light" value="false">Неопубликована</option>
-                    </select>
+            <div class="btn-group">
+                <select class="btn btn-light" @bind="тип_публикации" title="Тип публикации">
+                    @foreach (var t in type.GetNames(typeof(type)).ToList())
+                    {
+                        <option class="bg-light">@t</option>
+                    }
+                </select>
+                <select class="btn btn-light" @bind="публикация_опубликована" title="Опубликована/Неопубликована">
+                    <option class="bg-light" value="true">Опубликована</option>
+                    <option class="bg-light" value="false">Неопубликована</option>
+                </select>
 
-                    <a class="btn btn-light" title="Изменить" href="/posts/edit/@post.ID"><i class="fas fa-pencil-alt"></i></a>
-                    <button class="btn btn-light" title="Удалить" @onclick="удалить_публикацию"><i class="fas fa-trash text-danger"></i></button>
-                </div>
+                <a class="btn btn-light" title="Изменить" href="/posts/edit/@post.ID"><i class="fas fa-pencil-alt"></i></a>
+                <button class="btn btn-light" title="Удалить" @onclick="удалить_публикацию"><i class="fas fa-trash text-danger"></i></button>
+            </div>
         </div>
     </div>
 </EditForm>
@@ -43,13 +43,14 @@
         set
         {
             post.type = Enum.Parse<type>(value);
-            PostsService.update(post);
+            PostsServise.update(post);
         }
     }
 
     string публикация_опубликована
     {
-        get {
+        get
+        {
             if (post.published) { return "true"; }
             else { return "false"; }
         }
@@ -57,12 +58,13 @@
         {
             if (value == "true") { post.published = true; }
             else { post.published = false; }
-            PostsService.update(post);
+            PostsServise.update(post);
         }
     }
 
     async Task удалить_публикацию()
     {
-        await PostsService.delete(post.ID);
+        await PostsServise.delete(post.ID);
+        PostsServise.Изменить_фильтр();        
     }
 }
