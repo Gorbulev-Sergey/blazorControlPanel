@@ -1,0 +1,28 @@
+﻿<tr>
+    <th class=""><div class="form-control border-0 font-weight-bold">@ряд.date_and_time.Day, @ряд.date_and_time.DayOfWeek</div></th>
+    <th class=""><input class="form-control border-0" @bind="@ряд.description" /></th>
+    <th class="">
+        @if (ряд.date_and_time.ToShortTimeString() == "0:00")
+        {
+            <input type="time" class="form-control border-0 text-light" @bind="@ряд.date_and_time" />
+        }
+        else
+        {
+            <input type="time" class="form-control border-0 font-weight-bold" @bind="@ряд.date_and_time" />
+        }
+    </th>
+    <th class="">
+        <select class="form-control border-0" @bind="ряд.prayer" title="Тип публикации">
+            @foreach (var t in type.GetNames(typeof(тип_службы)).ToList())
+            {
+            <option class="bg-light" value="@t">@schedule.GetDescription(Enum.Parse<тип_службы>(t))</option>
+            }
+        </select>
+    </th>
+</tr>
+
+
+@code {
+    [Parameter]
+    public schedule ряд { get; set; }
+}

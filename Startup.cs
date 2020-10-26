@@ -60,8 +60,9 @@ namespace blazorControlPanel
                     options.ClientId = "7609221";
                     options.ClientSecret = "QGB9vZBryvr7gpEXB7vK";
                 });
+            services.AddSingleton<IViewBag, ViewBag>();
             services.AddTransient<IPostsServise, PostsService>();
-            services.AddSingleton<IViewBag,ViewBag>();
+            services.AddTransient<IPhotosService, PhotosService>();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,32 +1,31 @@
 ﻿@inject IPostsServise PostsServise
 
-<EditForm Model="post">
-    <div class="row mb-2 border-top pt-2">
-        <div class="col-2"><img class="img-fluid" src="@post.cover_image" /></div>
-        <div class="col-6 d-flex flex-column">
-            <small class="text-muted">@post.created.ToShortDateString()</small>
-            <h5>@post.title</h5>
-            @((MarkupString)post.description)
-        </div>
-        <div class="col-4">
-            <div class="btn-group">
-                <select class="btn btn-light" @bind="тип_публикации" title="Тип публикации">
-                    @foreach (var t in type.GetNames(typeof(type)).ToList())
-                    {
-                        <option class="bg-light">@t</option>
-                    }
-                </select>
-                <select class="btn btn-light" @bind="публикация_опубликована" title="Опубликована/Неопубликована">
-                    <option class="bg-light" value="true">Опубликована</option>
-                    <option class="bg-light" value="false">Неопубликована</option>
-                </select>
 
-                <a class="btn btn-light" title="Изменить" href="/posts/edit/@post.ID"><i class="fas fa-pencil-alt"></i></a>
-                <button class="btn btn-light" title="Удалить" @onclick="удалить_публикацию"><i class="fas fa-trash text-danger"></i></button>
-            </div>
+<div class="row mb-2 border-top pt-2">
+    <div class="col-2"><img class="img-fluid" src="@post.cover_image" /></div>
+    <div class="col-6 d-flex flex-column">
+        <small class="text-muted">@post.created.ToShortDateString()</small>
+        <h5>@post.title</h5>
+        @((MarkupString)post.description)
+    </div>
+    <div class="col-4">
+        <div class="btn-group">
+            <select class="btn btn-light" @bind="тип_публикации" title="Тип публикации">
+                @foreach (var t in type.GetNames(typeof(type)).ToList())
+                {
+                    <option class="bg-light">@t</option>
+                }
+            </select>
+            <select class="btn btn-light" @bind="публикация_опубликована" title="Опубликована/Неопубликована">
+                <option class="bg-light" value="true">Опубликована</option>
+                <option class="bg-light" value="false">Неопубликована</option>
+            </select>
+
+            <a class="btn btn-light" title="Изменить" href="/posts/edit/@post.ID"><i class="fas fa-pencil-alt"></i></a>
+            <button class="btn btn-light" title="Удалить" @onclick="@удалить_публикацию"><i class="fas fa-trash text-danger"></i></button>
         </div>
     </div>
-</EditForm>
+</div>
 
 
 
@@ -65,6 +64,5 @@
     async Task удалить_публикацию()
     {
         await PostsServise.delete(post.ID);
-        PostsServise.Изменить_фильтр();        
     }
 }

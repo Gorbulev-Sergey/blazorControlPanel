@@ -1,0 +1,35 @@
+﻿@page "/photos"
+@inject IViewBag ViewBag
+@inject IPhotosService PhotosService
+
+
+<div class="row mt-3">
+    @foreach (var album in albums.OrderByDescending(d => d.updated))
+    {
+        <div class="col-md-4 mb-md-1 mb-3 p-md-2">
+            <div class="card position-relative border-0">
+                <form asp-controller="imageAlbums" asp-action="GetImages" method="post" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#images" data-ajax-success="Show_images">
+                    <input name="albumID" hidden value="@album.ID" />
+                    <button class="btn btn-link m-0 p-0 border-0" type="submit" onclick="$('#images').children().remove()">
+                        <img src="@album.cover_image" class="card-img">
+                        <div class="card-footer border-0 position-absolute fixed-bottom text-left text-white название_альбома">
+                            <h5 class="card-title mb-0">@album.title</h5>
+                            <span class="text-light font-weight-light">@album.description</span><br class="mb-2" />
+                            <small class="text-muted mb-3">Опубликовано @album.created.ToShortDateString()</small>
+                        </div>
+                    </button>
+                </form>
+            </div>
+        </div>
+    }
+</div>
+
+
+@code { 
+    public List<imagesAlbum> albums = new List<imagesAlbum>();
+    protected override async Task OnInitializedAsync()
+    {
+        ViewBag.заголовок_страницы = "Фотографии";
+        albums = await PhotosService.imagesAlbums();
+    }
+}

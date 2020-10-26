@@ -16,12 +16,14 @@ namespace blazorControlPanel.Data
             posts = Set<post>();
             comments = Set<comment>();
             likes = Set<like>();
-            imageAlbums = Set<imageAlbum>();
+            imagesAlbums = Set<imagesAlbum>();
+            schedule = Set<schedule>();
         }
 
         public DbSet<post> posts { get; set; }
         public DbSet<comment> comments { get; set; }
         public DbSet<like> likes { get; set; }
-        public DbSet<imageAlbum> imageAlbums { get; set; }
+        public DbSet<imagesAlbum> imagesAlbums { get; set; }
+        public DbSet<schedule> schedule { get; set; }
     }
 }

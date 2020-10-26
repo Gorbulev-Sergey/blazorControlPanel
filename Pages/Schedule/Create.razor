@@ -1,0 +1,35 @@
+﻿@page "/schedule/create"
+
+<div class="form-group mb-3">
+    <input type="month" class="form-control border-0" placeholder="месяц" value="2020-11" />
+</div>
+
+<table class="table table-borderless table-sm mb-3">
+    <thead>
+        <tr class="bg-light">
+            <th><div class="form-control border-0 bg-light font-weight-bold">Дата</div></th>
+            <th><div class="form-control border-0 bg-light font-weight-bold">Праздник</div></th>
+            <th><div class="form-control border-0 bg-light font-weight-bold">Время</div></th>
+            <th><div class="form-control border-0 bg-light font-weight-bold">Служба</div></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in расписание)
+        {
+            <Row ряд="row"></Row>
+        }
+    </tbody>    
+</table>
+
+
+
+
+@code {
+    private List<schedule> расписание = new List<schedule>(30);
+
+    protected override void OnInitialized()
+    {
+        расписание.Add(new schedule { date_and_time = new DateTime(2020, 11, 1, 9, 0, 0), description = "Просто праздник", prayer = тип_службы.Молебен });
+        расписание.Add(new schedule { date_and_time = new DateTime(2020, 11, 2), description = "", prayer = тип_службы.Молебен });
+    }
+}

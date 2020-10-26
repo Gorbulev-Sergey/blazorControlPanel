@@ -1,0 +1,102 @@
+﻿@page "/photos/create"
+@inject IViewBag ViewBag
+@inject IPhotosService PhotosService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime 
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    @*Заголовок страницы*@
+    <h1></h1>
+    @*Кнопка создать*@
+    <div class="form-group mb-0">
+        <a class="btn btn-link" href="/photos">Отмена</a>
+        <input type="submit" value="Создать" class="btn btn-primary" @onclick="()=>OnValidSubmit()" />
+    </div>
+</div>
+
+<hr class="mt-1" />
+<EditForm Model="album" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="list-group" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home">Обложка</a>
+                <a class="list-group-item list-group-item-action" id="list-images-list" data-toggle="list" href="#list-images">Фотографии</a>
+            </div>
+        </div>
+        <div class="col-md-10 mt-3 mt-md-0">
+            <div class="tab-content" id="nav-tabContent">
+                @*Обложка публикации*@
+                <div class="tab-pane fade show active" id="list-home">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="title" class="control-label">Название</label>
+                                <input id="title" class="form-control" @bind="album.title" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="cover_image" class="control-label">Url обложки</label>
+                                <input id="cover_image" class="form-control" @bind="album.cover_image" />
+                                <img class="card-img w-100 mt-3" src="@album.cover_image" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*Содержимое публикации*@
+                <div class="tab-pane fade" id="list-images">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-light" onclick="$('#field_and_image').clone().removeAttr('hidden').removeAttr('id').appendTo($(this).parent().next())">Добавить изображение &nbsp;<i class="fas fa-plus-circle text-primary"></i></button>
+                            </div>
+                            <div class="form-group">@*Место для вставки поля ввода с картинкой*@</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@*Вспомогательные элементы*@
+@*Элемент поле ввода с картинкой*@
+<div id="field_and_image" class="form-row mb-2" hidden>
+    <div class="col-9">
+        <input name="images_urls" class="form-control" oninput="$(this).parent().next().children().first().attr('src', $(this).val())" placeholder="Url изображения" />
+        <input name="images_titles" class="form-control mt-1 form-control-sm border-0" placeholder="Название изображения" />
+    </div>
+    <div class="col-2">
+        <img class="card-img" />
+    </div>
+    <div class="col-1">
+        <button type="button" class="btn btn-light text-danger" onclick="$(this).parent().parent().remove()" title="Удалить изображение"><i class="fas fa-trash"></i></button>
+    </div>
+</div>
+
+<div class="alert alert-dark" @onclick="()=>up()">@s.Count()</div>
+
+
+@code {
+    public imagesAlbum album = new imagesAlbum();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ViewBag.заголовок_страницы = "Создать фотоальбом";
+    }
+
+    List<object> s = new List<object>();
+    async Task up()
+    {
+        s = await JSRuntime.InvokeAsync<List<object>>("list_images_urls", null);
+    }
+
+    async Task OnValidSubmit()
+    {
+        await PhotosService.create(album);
+        NavigationManager.NavigateTo("/photos");
+    }
+}

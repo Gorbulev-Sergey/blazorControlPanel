@@ -35,7 +35,6 @@ namespace blazorControlPanel.Services
             return await _context.posts.ToListAsync();
         }
 
-        [Authorize(Roles ="администратор, редактор")]
         public async Task<string> create(post post)
         {
             if (post != null)
@@ -47,14 +46,12 @@ namespace blazorControlPanel.Services
             return "Не сохранена";
         }
 
-        [Authorize(Roles = "администратор, редактор")]
         public async Task<int> update(post post)
         {
             _context.Entry(post).State = EntityState.Modified;            
             return await _context.SaveChangesAsync();            
         }
 
-        [Authorize(Roles = "Администратор, Редактор")]
         public async Task<int> delete(int id)
         {
             _context.posts.Remove(_context.posts.FirstOrDefault(p=>p.ID==id));
