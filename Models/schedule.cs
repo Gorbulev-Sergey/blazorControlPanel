@@ -27,6 +27,9 @@ namespace blazorControlPanel.Models
         [Display(Name = "Служба")]
         public тип_службы prayer { get; set; }
 
+        /// <summary>
+        /// Метод, который позволяет получить значение атрибута "description" для этого enum
+        /// </summary>
         public static string GetDescription(Enum enumElement)
         {
             Type type = enumElement.GetType();
@@ -46,23 +49,23 @@ namespace blazorControlPanel.Models
     public enum тип_службы
     {
         [Description("")]
-        пустое=0,
+        пусто=0,
         [Description("Литургия")]
-        Литургия,
+        Литургия=1,
         [Description("Всенощное бдение")]
-        Всенощное_бдение,
+        Всенощное_бдение=2,
         [Description("Молебен")]
-        Молебен,
+        Молебен=3,
         [Description("Акафист")]
-        Акафист,
+        Акафист=4,
         [Description("Панихида")]
-        Панихида,
+        Панихида=5,
         [Description("Литургия, молебен")]
-        Литургия_и_молебен,
+        Литургия_и_молебен=6,
         [Description("Литургия, панихида")]
-        Литургия_и_панихида,
+        Литургия_и_панихида=7,
         [Description("Молебен с акафистом")]
-        Молебен_с_акафистом
+        Молебен_с_акафистом=8
     }
 
 

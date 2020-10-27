@@ -6,7 +6,7 @@
 
 <table class="table table-borderless table-sm mb-3">
     <thead>
-        <tr class="bg-light">
+        <tr class="bg-light mb-3">
             <th><div class="form-control border-0 bg-light font-weight-bold">Дата</div></th>
             <th><div class="form-control border-0 bg-light font-weight-bold">Праздник</div></th>
             <th><div class="form-control border-0 bg-light font-weight-bold">Время</div></th>
@@ -30,6 +30,9 @@
     protected override void OnInitialized()
     {
         расписание.Add(new schedule { date_and_time = new DateTime(2020, 11, 1, 9, 0, 0), description = "Просто праздник", prayer = тип_службы.Молебен });
-        расписание.Add(new schedule { date_and_time = new DateTime(2020, 11, 2), description = "", prayer = тип_службы.Молебен });
+        расписание.Add(new schedule { date_and_time = new DateTime(2020, 11, 2), description = "", prayer = тип_службы.пусто });
+        расписание.Add(new schedule { date_and_time = new DateTime(2020, 11, 3, 9, 0, 0), description = "Просто праздник", prayer = тип_службы.Молебен_с_акафистом });
+        расписание.Add(new schedule { date_and_time = new DateTime(2020, 11, 4), description = "", prayer = тип_службы.пусто });
+
     }
 }
