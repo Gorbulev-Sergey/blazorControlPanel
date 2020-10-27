@@ -17,13 +17,14 @@ namespace blazorControlPanel.Data
             comments = Set<comment>();
             likes = Set<like>();
             imagesAlbums = Set<imagesAlbum>();
-            schedule = Set<schedule>();
+            schedules = Set<schedule>();
         }
 
         public DbSet<post> posts { get; set; }
         public DbSet<comment> comments { get; set; }
         public DbSet<like> likes { get; set; }
         public DbSet<imagesAlbum> imagesAlbums { get; set; }
-        public DbSet<schedule> schedule { get; set; }
+        public DbSet<schedule> schedules { get; set; }
+        public DbSet<schedule_string> schedules_strings { get; set; }
     }
 }

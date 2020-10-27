@@ -1,0 +1,21 @@
+﻿<table class="table table-borderless table-sm mb-3">
+    <thead>
+        <tr class="bg-light mb-3">
+            <th><div class="form-control border-0 bg-light font-weight-bold">Дата</div></th>
+            <th><div class="form-control border-0 bg-light font-weight-bold">Праздник</div></th>
+            <th><div class="form-control border-0 bg-light font-weight-bold">Время</div></th>
+            <th><div class="form-control border-0 bg-light font-weight-bold">Служба</div></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var str in schedule.Schedule)
+        {
+            <Schedule_string schedule_string="str"></Schedule_string>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public schedule schedule { get; set; }
+}

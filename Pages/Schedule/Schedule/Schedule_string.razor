@@ -1,6 +1,6 @@
 ﻿<tr>
-    <th class=""><div class="form-control border-0 font-weight-bold">@ряд.date_and_time.Day, @ряд.date_and_time.DayOfWeek</div></th>
-    <th class=""><input class="form-control border-0" @bind="@ряд.description" /></th>
+    <th class=""><div class="form-control border-0 font-weight-bold">@schedule_string.date_and_time.Day, @schedule_string.date_and_time.DayOfWeek</div></th>
+    <th class=""><input class="form-control border-0" @bind="@schedule_string.description" /></th>
     <th class="">
         @if (время.ToShortTimeString()!="0:00")
         {
@@ -12,7 +12,7 @@
         }        
     </th>
     <th class="">
-        <select class="form-control border-0" @bind="ряд.prayer" title="Тип публикации">
+        <select class="form-control border-0" @bind="schedule_string.prayer" title="Тип публикации">
             @foreach (var t in type.GetNames(typeof(тип_службы)).ToList())
             {
                 <option class="bg-light" value="@t">@schedule.GetDescription(Enum.Parse<тип_службы>(t))</option>
@@ -25,16 +25,16 @@
 
 @code {
     [Parameter]
-    public schedule ряд { get; set; }
+    public schedule_string schedule_string { get; set; }
 
     public DateTime время
     {
         get {
-            return DateTime.Parse(ряд.date_and_time.ToShortTimeString());
+            return DateTime.Parse(schedule_string.date_and_time.ToShortTimeString());
         }
         set
         {
-            ряд.date_and_time = DateTime.Parse(String.Format("{0} {1}", ряд.date_and_time.ToShortDateString(), value.ToShortTimeString()));
+            schedule_string.date_and_time = DateTime.Parse(String.Format("{0} {1}", schedule_string.date_and_time.ToShortDateString(), value.ToShortTimeString()));
         }
     }
 }
