@@ -1,26 +1,103 @@
 ﻿@page "/schedule/create"
 @inject IViewBag ViewBag
+@inject ISchedulesService SchedulesService
 
 <div class="form-group mb-3">
-    <input type="month" class="form-control border-0" placeholder="месяц" @bind="расписание.schedule_year_and_month"/>
+    <input type="month" class="form-control border-0" placeholder="месяц" @bind="месяц_и_год_расписания" />
+    <button @onclick="()=>сохранить()">Сохранить</button>
 </div>
 
-<Schedule schedule="расписание"></Schedule>
-
-
+<Schedule schedule="schedule"></Schedule>
 
 
 @code {
-    private schedule расписание = new schedule(DateTime.Now);
+    private DateTime _месяц_и_год_расписания;
+    private DateTime месяц_и_год_расписания
+    {
+        get
+        {
+            return _месяц_и_год_расписания;
+        }
+        set
+        {
+            _месяц_и_год_расписания = value;
+            schedule.Clear();
+            получение_данных_not_async();
+        }
+    }
 
-    protected override void OnInitialized()
+    private List<schedule_string> schedule = new List<schedule_string>();
+
+    protected override async Task OnInitializedAsync()
     {
         ViewBag.заголовок_страницы = "Создать расписание";
 
-        //foreach
-        //{
-        //    расписание.Add(new schedule { date_and_time = new DateTime(выбранный_месяц_и_год.Year, выбранный_месяц_и_год.Month, i, 0, 0, 0), description = "", prayer = тип_службы.пусто });
+        _месяц_и_год_расписания = DateTime.Now;
+        schedule.Clear();
+        await получение_данных();
 
-        //}
+    }
+
+    async Task сохранить()
+    {
+        await SchedulesService.create(schedule);
+    }
+
+    private async Task получение_списка_из_бд()
+    {
+        schedule = await SchedulesService.schedule(месяц_и_год_расписания);
+    }
+
+    private async Task получение_данных()
+    {
+        // Получаем данные из бд
+        var schedule_db = await SchedulesService.schedule(месяц_и_год_расписания);
+
+        // Заполняем месяц данными
+        for (int i = 1; i <= DateTime.DaysInMonth(_месяц_и_год_расписания.Year, _месяц_и_год_расписания.Month); i++)
+        {
+            if (schedule_db.FirstOrDefault(s => s.date_and_time.Day == i) != null)
+            {
+                // Если есть данные из бд на этот день, то подставляем их
+                schedule.Add(schedule_db.FirstOrDefault(s => s.date_and_time.Day == i));
+            }
+            else
+            {
+                // иначе, вставляем пустую строку
+                schedule.Add(new schedule_string { date_and_time = new DateTime(месяц_и_год_расписания.Year, месяц_и_год_расписания.Month, i) });
+            }
+        }
+    }
+
+    private void получение_данных_not_async()
+    {
+        // Получаем данные из бд
+        var schedule_db = SchedulesService.schedule_not_async(месяц_и_год_расписания);
+
+        // Заполняем месяц данными
+        for (int i = 1; i <= DateTime.DaysInMonth(_месяц_и_год_расписания.Year, _месяц_и_год_расписания.Month); i++)
+        {
+            if (schedule_db.FirstOrDefault(s => s.date_and_time.Day == i) != null)
+            {
+                // Если есть данные из бд на этот день, то подставляем их
+                schedule.Add(schedule_db.FirstOrDefault(s => s.date_and_time.Day == i));
+            }
+            else
+            {
+                // иначе, вставляем пустую строку
+                schedule.Add(new schedule_string { date_and_time = new DateTime(месяц_и_год_расписания.Year, месяц_и_год_расписания.Month, i) });
+            }
+        }
+    }
+
+    private async Task аааааааа()
+    {
+        // Получаем данные из бд
+        var s_db = await SchedulesService.schedule(месяц_и_год_расписания);
+        foreach (var str_db in s_db)
+        {
+            var str = schedule.FirstOrDefault(s => s.date_and_time.Year == str_db.date_and_time.Year && s.date_and_time.Month == str_db.date_and_time.Month && s.date_and_time.Day == str_db.date_and_time.Day);
+            str = str_db;
+        }
     }
 }

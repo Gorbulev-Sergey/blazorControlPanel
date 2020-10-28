@@ -8,7 +8,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var str in schedule.Schedule)
+        @foreach (var str in schedule)
         {
             <Schedule_string schedule_string="str"></Schedule_string>
         }
@@ -17,5 +17,5 @@
 
 @code {
     [Parameter]
-    public schedule schedule { get; set; }
+    public List<schedule_string> schedule { get; set; }
 }

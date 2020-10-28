@@ -62,7 +62,8 @@ namespace blazorControlPanel
                 });
             services.AddSingleton<IViewBag, ViewBag>();
             services.AddTransient<IPostsServise, PostsService>();
-            services.AddTransient<IPhotosService, PhotosService>();            
+            services.AddTransient<IPhotosService, PhotosService>();
+            services.AddTransient<ISchedulesService, ScheduleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
