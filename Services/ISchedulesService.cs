@@ -12,8 +12,7 @@ namespace blazorControlPanel.Services
     interface ISchedulesService
     {
         List<schedule_string> schedule(DateTime schedule_year_and_month);
-        Task create(List<schedule_string> schedule);
-        Task update(List<schedule_string> schedule);
+        Task update_or_create(List<schedule_string> schedule);
         Task delete(List<schedule_string> schedule);
     }
 
@@ -28,30 +27,37 @@ namespace blazorControlPanel.Services
         { 
             return _context.schedule.Where(s => s.date_and_time.Year == schedule_year_and_month.Year && s.date_and_time.Month == schedule_year_and_month.Month).ToList();
         }
-        public async Task create(List<schedule_string> schedule)
+        public async Task update_or_create(List<schedule_string> schedule)
         {
             foreach (var str in schedule)
             {
-                if (!String.IsNullOrEmpty(str.description) || str.prayer != тип_службы.пусто || str.date_and_time.ToString() == "0:00")
-                {
-                    _context.schedule.Add(str);
-                }
-            }
-            await _context.SaveChangesAsync();
-        }
-        public async Task update(List<schedule_string> schedule)
-        {
-            foreach (var str in schedule)
-            {
-                if (!String.IsNullOrEmpty(str.description) || str.prayer != тип_службы.пусто || str.date_and_time.ToString() == "0:00")
+                // сохраняем или меняем
+                if (!String.IsNullOrEmpty(str.description) || !String.IsNullOrWhiteSpace(str.description) || str.prayer != тип_службы.пусто || str.date_and_time.ToString() == "0:00")
                 {                    
                     try
                     {
-                        _context.Update(str);                        
+                        _context.Update(str);
                     }
                     catch
                     {
                         _context.schedule.Add(str);
+                    }
+                }
+            }
+            await _context.SaveChangesAsync();
+
+            foreach (var str in _context.schedule)
+            {
+                // Очищаем пустые строки в бд, которые могли попасть после обновления данных
+                if (String.IsNullOrEmpty(str.description) && str.prayer == тип_службы.пусто && str.date_and_time.ToShortTimeString() == "0:00")
+                {
+                    try
+                    {
+                        _context.Remove(str);
+                    }
+                    catch
+                    {
+
                     }
                 }
             }

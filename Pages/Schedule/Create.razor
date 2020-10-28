@@ -58,16 +58,6 @@
 
     async Task сохранить_данные()
     {        
-        await SchedulesService.update(schedule);
-
-        //// Обновляем или сохраняем данные
-        //try
-        //{
-        //    SchedulesService.update(schedule);
-        //}
-        //catch
-        //{
-        //    SchedulesService.create(schedule);
-        //}
+        await SchedulesService.update_or_create(schedule);
     }
 }
