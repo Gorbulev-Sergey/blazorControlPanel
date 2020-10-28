@@ -65,8 +65,12 @@ namespace blazorControlPanel.Services
         }
         public async Task delete(List<schedule_string> schedule)
         {
-            //_context.schedules.Remove(schedule);
-            //await _context.SaveChangesAsync();
+            foreach (var str in schedule)
+            {
+                try { _context.schedule.Remove(str); }
+                catch { }
+            }
+            await _context.SaveChangesAsync();
         }
 
         

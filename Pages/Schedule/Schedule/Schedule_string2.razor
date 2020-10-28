@@ -1,8 +1,7 @@
 ﻿@using System.Globalization
 
 <tr class="@цвет">
-    <th scope="row"><div class="form-control border-0 font-weight-bold bg-transparent">@schedule_string.date_and_time.Day, @CultureInfo.GetCultureInfo("ru-RU").DateTimeFormat.GetDayName(schedule_string.date_and_time.DayOfWeek)</div></th>
-    <th scope="row"><textarea class="form-control border-0 bg-transparent h-auto" @bind="@schedule_string.description" /></th>
+    <th scope="row"><input class="form-control border-0 bg-transparent" @bind="@schedule_string.description" /></th>
     <th scope="row">
         @if (время.ToShortTimeString()!="0:00")
         {

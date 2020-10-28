@@ -2,9 +2,14 @@
 @inject IViewBag ViewBag
 @inject ISchedulesService SchedulesService
 
-<div class="form-group mb-3">
-    <input type="month" class="form-control border-0" placeholder="месяц" @bind="месяц_и_год_расписания" />
-    <button @onclick="()=>сохранить_данные()">Сохранить</button>
+<div class="d-flex justify-content-between mb-3">
+    <div>
+        <input id="select_date" type="month" class="btn btn-light" placeholder="месяц" @bind="месяц_и_год_расписания" title="Выберите дату" />
+    </div>    
+    <div>
+        <a class="btn btn-secondary" href="/schedule">Отмена</a>
+        <button class="btn btn-primary" @onclick="()=>сохранить_данные()">Сохранить</button>
+    </div>
 </div>
 
 <Schedule schedule="schedule"></Schedule>
