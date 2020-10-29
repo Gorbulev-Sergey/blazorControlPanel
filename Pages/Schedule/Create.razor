@@ -69,29 +69,6 @@
                     schedule.Add(schedule_db.Last(s => s.date_and_time.Day == i));
                     break;
             }
-
-            //if (schedule_db.FirstOrDefault(s => s.date_and_time.Day == i) != null)
-            //{
-            //    // Если есть данные из бд на этот день, то подставляем их
-            //    schedule.Add(schedule_db.First(s => s.date_and_time.Day == i));
-            //}
-            //else
-            //{
-            //    // иначе, вставляем пустую строку
-            //    schedule.Add(new schedule_string { date_and_time = new DateTime(месяц_и_год_расписания.Year, месяц_и_год_расписания.Month, i) });
-            //}
-
-            //try
-            //{
-            //    // Если есть данные из бд на этот день, то подставляем их
-            //    schedule.Add(schedule_db.Last(s => s.date_and_time.Day == i));
-            //}
-            //catch
-            //{
-            //    // иначе, вставляем пустую строку
-            //    schedule.Add(new schedule_string { date_and_time = new DateTime(месяц_и_год_расписания.Year, месяц_и_год_расписания.Month, i) });
-            //}
-
         }
     }
 

@@ -1,6 +1,6 @@
 ﻿@using System.Globalization
 
-<tr class="@цвет">
+<tr class="@цвет_фона">
     <th scope="row" width="15%" rowspan="2"><div class="form-control border-0 font-weight-bold bg-transparent">@schedule_string.date_and_time.Day, @CultureInfo.GetCultureInfo("ru-RU").DateTimeFormat.GetDayName(schedule_string.date_and_time.DayOfWeek)</div></th>
     <th scope="row" width="55%"><input class="form-control border-0 bg-transparent h-auto" @bind="@schedule_string.description" multiple /></th>
     <th scope="row" width="10%">
@@ -10,7 +10,7 @@
         }
         else
         {
-            <input type="time" class="form-control border-0 text-white bg-transparent" @bind="время" />
+            <input type="time" class="form-control border-0 text-white bg-transparent" style="@цвет_пустого_времени" @bind="время" />
         }        
     </th>
     <th scope="row" width="20%">
@@ -29,7 +29,7 @@
     [Parameter]
     public schedule_string schedule_string { get; set; }
 
-    private string цвет;
+    private string цвет_фона, цвет_пустого_времени;
 
     public DateTime время
     {
@@ -46,7 +46,8 @@
     {
         if (schedule_string.date_and_time.DayOfWeek==DayOfWeek.Sunday)
         {
-            цвет = "table-primary";
+            цвет_фона = "table-primary";
+            цвет_пустого_времени = "color:#b8daff!important";
         }
     }
 }
