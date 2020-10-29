@@ -45,6 +45,7 @@
         // Получаем данные из бд
         var schedule_db = SchedulesService.schedule(месяц_и_год_расписания);
 
+
         // Заполняем месяц данными
         for (int i = 1; i <= DateTime.DaysInMonth(_месяц_и_год_расписания.Year, _месяц_и_год_расписания.Month); i++)
         {
@@ -58,11 +59,23 @@
                 // иначе, вставляем пустую строку
                 schedule.Add(new schedule_string { date_and_time = new DateTime(месяц_и_год_расписания.Year, месяц_и_год_расписания.Month, i) });
             }
+
+            if (schedule_db.LastOrDefault(s => s.date_and_time.Day == i) != null)
+            {
+                // Если есть данные из бд на этот день, то подставляем их
+                schedule.Add(schedule_db.LastOrDefault(s => s.date_and_time.Day == i));
+            }
+            else
+            {
+                // иначе, вставляем пустую строку
+                schedule.Add(new schedule_string { date_and_time = new DateTime(месяц_и_год_расписания.Year, месяц_и_год_расписания.Month, i) });
+            }
+
         }
     }
 
     async Task сохранить_данные()
-    {        
+    {
         await SchedulesService.update_or_create(schedule);
     }
 }

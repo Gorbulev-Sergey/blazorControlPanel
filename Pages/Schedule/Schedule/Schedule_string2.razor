@@ -1,16 +1,17 @@
 ﻿@using System.Globalization
 
 <tr class="@цвет">
+    @*<th scope="row"></th>*@
     <th scope="row"><input class="form-control border-0 bg-transparent" @bind="@schedule_string.description" /></th>
     <th scope="row">
-        @if (время.ToShortTimeString()!="0:00")
+        @if (время.ToShortTimeString() != "0:00")
         {
             <input type="time" class="form-control border-0 font-weight-bold bg-transparent" @bind="время" />
         }
         else
         {
             <input type="time" class="form-control border-0 text-white bg-transparent" @bind="время" />
-        }        
+        }
     </th>
     <th scope="row">
         <select class="form-control border-0 bg-transparent" @bind="schedule_string.prayer" title="Тип публикации">

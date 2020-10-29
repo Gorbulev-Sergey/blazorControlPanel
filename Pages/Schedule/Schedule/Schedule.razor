@@ -1,19 +1,31 @@
-﻿<table class="table table-sm ">
-    <thead>
-        <tr class="bg-secondary border-secondary text-white">
-            <th scope="col"><div class="ml-3">Дата</div></th>
-            <th scope="col"><div class="ml-2">Праздник</div></th>
-            <th scope="col"><div class="ml-2">Время</div></th>
-            <th scope="col"><div class="ml-3">Служба</div></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var str in schedule)
-        {
-                <Schedule_string schedule_string="str"></Schedule_string>
-        }
-    </tbody>
-</table>
+﻿<div class="table-responsive">
+    <table class="table table-sm ">
+        <thead>
+            <tr class="bg-secondary border-secondary text-white">
+                <th scope="col"><div class="ml-3">Дата</div></th>
+                <th scope="col"><div class="ml-2">Праздник</div></th>
+                <th scope="col"><div class="ml-2">Время</div></th>
+                <th scope="col"><div class="ml-3">Служба</div></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int дата_предыдущего = 0; }
+            @foreach (var str in schedule)
+            {
+                if (дата_предыдущего == str.date_and_time.Day)
+                {
+                    <Schedule_string2 schedule_string="str"></Schedule_string2>
+                }
+                else
+                {
+                    <Schedule_string schedule_string="str"></Schedule_string>
+                    дата_предыдущего = str.date_and_time.Day;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
 
 @code {
     [Parameter]

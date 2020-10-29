@@ -1,9 +1,9 @@
 ﻿@using System.Globalization
 
 <tr class="@цвет">
-    <th scope="row"><div class="form-control border-0 font-weight-bold bg-transparent">@schedule_string.date_and_time.Day, @CultureInfo.GetCultureInfo("ru-RU").DateTimeFormat.GetDayName(schedule_string.date_and_time.DayOfWeek)</div></th>
-    <th scope="row"><textarea class="form-control border-0 bg-transparent h-auto" @bind="@schedule_string.description" /></th>
-    <th scope="row">
+    <th scope="row" width="15%" rowspan="2"><div class="form-control border-0 font-weight-bold bg-transparent">@schedule_string.date_and_time.Day, @CultureInfo.GetCultureInfo("ru-RU").DateTimeFormat.GetDayName(schedule_string.date_and_time.DayOfWeek)</div></th>
+    <th scope="row" width="55%"><input class="form-control border-0 bg-transparent h-auto" @bind="@schedule_string.description" multiple /></th>
+    <th scope="row" width="10%">
         @if (время.ToShortTimeString()!="0:00")
         {
             <input type="time" class="form-control border-0 font-weight-bold bg-transparent" @bind="время" />
@@ -13,7 +13,7 @@
             <input type="time" class="form-control border-0 text-white bg-transparent" @bind="время" />
         }        
     </th>
-    <th scope="row">
+    <th scope="row" width="20%">
         <select class="form-control border-0 bg-transparent" @bind="schedule_string.prayer" title="Тип публикации">
             @foreach (var t in type.GetNames(typeof(тип_службы)).ToList())
             {
