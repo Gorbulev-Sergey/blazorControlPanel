@@ -49,27 +49,48 @@
         // Заполняем месяц данными
         for (int i = 1; i <= DateTime.DaysInMonth(_месяц_и_год_расписания.Year, _месяц_и_год_расписания.Month); i++)
         {
-            if (schedule_db.FirstOrDefault(s => s.date_and_time.Day == i) != null)
+            var small_list = schedule_db.Where(s => s.date_and_time.Year == _месяц_и_год_расписания.Year && s.date_and_time.Month == _месяц_и_год_расписания.Month && s.date_and_time.Day == i);
+
+            switch (small_list.Count())
             {
-                // Если есть данные из бд на этот день, то подставляем их
-                schedule.Add(schedule_db.FirstOrDefault(s => s.date_and_time.Day == i));
-            }
-            else
-            {
-                // иначе, вставляем пустую строку
-                schedule.Add(new schedule_string { date_and_time = new DateTime(месяц_и_год_расписания.Year, месяц_и_год_расписания.Month, i) });
+                case 0:
+                    // вставляем пустую строку дважды
+                    schedule.Add(new schedule_string { date_and_time = new DateTime(месяц_и_год_расписания.Year, месяц_и_год_расписания.Month, i) });
+                    schedule.Add(new schedule_string { date_and_time = new DateTime(месяц_и_год_расписания.Year, месяц_и_год_расписания.Month, i) });
+                    break;
+                case 1:
+                    // Если есть 1 строка из бд на этот день, то подставляем eё, и добавляем вторую пустую строку
+                    schedule.Add(schedule_db.First(s => s.date_and_time.Day == i));
+                    schedule.Add(new schedule_string { date_and_time = new DateTime(месяц_и_год_расписания.Year, месяц_и_год_расписания.Month, i) });
+                    break;
+                case 2:
+                    // Если есть 2 строки из бд на этот день, то подставляем их
+                    schedule.Add(schedule_db.First(s => s.date_and_time.Day == i));
+                    schedule.Add(schedule_db.Last(s => s.date_and_time.Day == i));
+                    break;
             }
 
-            if (schedule_db.LastOrDefault(s => s.date_and_time.Day == i) != null)
-            {
-                // Если есть данные из бд на этот день, то подставляем их
-                schedule.Add(schedule_db.LastOrDefault(s => s.date_and_time.Day == i));
-            }
-            else
-            {
-                // иначе, вставляем пустую строку
-                schedule.Add(new schedule_string { date_and_time = new DateTime(месяц_и_год_расписания.Year, месяц_и_год_расписания.Month, i) });
-            }
+            //if (schedule_db.FirstOrDefault(s => s.date_and_time.Day == i) != null)
+            //{
+            //    // Если есть данные из бд на этот день, то подставляем их
+            //    schedule.Add(schedule_db.First(s => s.date_and_time.Day == i));
+            //}
+            //else
+            //{
+            //    // иначе, вставляем пустую строку
+            //    schedule.Add(new schedule_string { date_and_time = new DateTime(месяц_и_год_расписания.Year, месяц_и_год_расписания.Month, i) });
+            //}
+
+            //try
+            //{
+            //    // Если есть данные из бд на этот день, то подставляем их
+            //    schedule.Add(schedule_db.Last(s => s.date_and_time.Day == i));
+            //}
+            //catch
+            //{
+            //    // иначе, вставляем пустую строку
+            //    schedule.Add(new schedule_string { date_and_time = new DateTime(месяц_и_год_расписания.Year, месяц_и_год_расписания.Month, i) });
+            //}
 
         }
     }

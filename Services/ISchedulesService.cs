@@ -25,7 +25,7 @@ namespace blazorControlPanel.Services
         }
         public List<schedule_string> schedule(DateTime schedule_year_and_month) 
         { 
-            return _context.schedule.Where(s => s.date_and_time.Year == schedule_year_and_month.Year && s.date_and_time.Month == schedule_year_and_month.Month).ToList();
+            return _context.schedule.Where(s => s.date_and_time.Year == schedule_year_and_month.Year && s.date_and_time.Month == schedule_year_and_month.Month).OrderBy(d=>d.date_and_time).ToList();
         }
         public async Task update_or_create(List<schedule_string> schedule)
         {
