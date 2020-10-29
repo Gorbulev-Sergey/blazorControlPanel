@@ -56,6 +56,8 @@ namespace blazorControlPanel.Models
         /// </summary>
         [Display(Name = "Служба")]
         public тип_службы prayer { get; set; }
+        [Display(Name ="Цвет или формат текста")]
+        public тип_праздника тип_праздника { get; set; }
 
         /// <summary>
         /// Метод, который позволяет получить значение атрибута "description" для этого enum
@@ -96,5 +98,19 @@ namespace blazorControlPanel.Models
         Литургия_и_панихида=7,
         [Description("Молебен с акафистом")]
         Молебен_с_акафистом=8
+    }
+
+    public enum тип_праздника
+    {
+        [Description("")]
+        пусто =0,
+        [Description("жирный")]
+        жирный =1,
+        [Description("курсив")]
+        курсив =2,
+        [Description("жирный заглавный")]
+        жирный_заглавный =3,
+        [Description("primary")]
+        primary =4
     }
 }
