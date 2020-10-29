@@ -51,7 +51,7 @@
     <div class="col-md-6 mb-3">
         <div class="rounded bg-light">
             <div class="btn-group btn-block rounded">
-                <button class="btn btn-secondary d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#p1">Новая публикация<span class="fas fa-chevron-down"></span></button>
+                <button class="btn btn-secondary d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#p1">Быстрая публикация<span class="fas fa-chevron-down"></span></button>
             </div>
             <div class="collapse show rounded p-3" id="p1">
                     <div class="form-group d-flex align-items-center">
@@ -60,18 +60,18 @@
                             <button type="button" class="form-control border-0 btn-block d-flex justify-content-between align-items-center" data-toggle="dropdown" aria-expanded="false">
                                 <span>новость</span><span class="fas fa-chevron-down"></span>
                             </button>
-                            <div class="dropdown-menu">
-                                <ul class="nav nav-pills mb-3" id="posts">
-                                    <li class="nav-item d-block">
+                            <div class="dropdown-menu w-100">
+                                <ul class="nav nav-pills d-flex flex-column mb-3" id="posts">
+                                    <li class="nav-item">
                                         <a class="nav-link" onclick="$(this).parent().parent().parent().prev().children().first().text($(this).text())" data-toggle="pill" href="#c_article">статья</a>
                                     </li>
-                                    <li class="nav-item d-block">
+                                    <li class="nav-item">
                                         <a class="nav-link active" onclick="$(this).parent().parent().parent().prev().children().first().text($(this).text())" data-toggle="pill" href="#c_news">новость</a>
                                     </li>
-                                    <li class="nav-item d-block">
+                                    <li class="nav-item">
                                         <a class="nav-link" onclick="$(this).parent().parent().parent().prev().children().first().text($(this).text())" data-toggle="pill" href="#c_notif">объявление</a>
                                     </li>
-                                    <li class="nav-item d-block">
+                                    <li class="nav-item">
                                         <a class="nav-link" onclick="$(this).parent().parent().parent().prev().children().first().text($(this).text())" data-toggle="pill" href="#c_video">видео</a>
                                     </li>
                                 </ul>
