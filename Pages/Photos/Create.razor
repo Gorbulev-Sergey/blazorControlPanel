@@ -6,11 +6,18 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     @*Заголовок страницы*@
-    <h1></h1>
-    @*Кнопка создать*@
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link active" id="list-home-list" data-toggle="pill" href="#list-home">Обложка</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="list-content-list" data-toggle="pill" href="#list-images">Фотографии</a>
+        </li>
+    </ul>
+    @*Кнопки сохранения и отмены*@
     <div class="form-group mb-0">
-        <a class="btn btn-link" href="/photos">Отмена</a>
-        <input type="submit" value="Создать" class="btn btn-primary" @onclick="()=>OnValidSubmit()" />
+        <a class="btn btn-secondary" href="/photos">Отмена</a>
+        <input type="button" value="Сохранить" class="btn btn-primary" @onclick="()=>OnValidSubmit()" />
     </div>
 </div>
 
@@ -18,15 +25,6 @@
 <EditForm Model="album" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="row">
-        <div class="col-md-2">
-            <div class="list-group" id="list-tab" role="tablist">
-                <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home">Обложка</a>
-                <a class="list-group-item list-group-item-action" id="list-images-list" data-toggle="list" href="#list-images">Фотографии</a>
-            </div>
-        </div>
-        <div class="col-md-10 mt-3 mt-md-0">
             <div class="tab-content" id="nav-tabContent">
                 @*Обложка публикации*@
                 <div class="tab-pane fade show active" id="list-home">
@@ -58,8 +56,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 </EditForm>
 
 @*Вспомогательные элементы*@
