@@ -1,0 +1,20 @@
+﻿<div class="form-row mb-2">
+    <div class="col-9">
+        <input class="form-control" @bind="image.url" placeholder="Url изображения" />
+        <input class="form-control mt-1 form-control-sm border-0" @bind="image.title" placeholder="Название изображения" />
+    </div>
+    <div class="col-2">
+        <img class="card-img" src="@image.url" />
+    </div>
+    <div class="col-1">
+        @navigation
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public image image { get; set; }
+
+    [Parameter]
+    public RenderFragment navigation { get; set; }
+}

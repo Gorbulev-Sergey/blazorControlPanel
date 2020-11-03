@@ -1,0 +1,44 @@
+﻿@page "/photos/create_test"
+@inject IViewBag ViewBag
+
+<div class="mb-3">
+    <button class="btn btn-dark" @onclick="()=>добавить()">Добавить фотографию</button>
+</div>
+
+
+<div>
+    @foreach (var image in images)
+    {
+        <Photo image="image">
+            <navigation>
+                <button class="btn btn-light text-danger" @onclick="()=>удалить(image)" title="Удалить изображение">Удалить</button>
+            </navigation>
+        </Photo>        
+    }
+</div>
+
+
+
+
+
+
+
+
+@code {
+    List<image> images = new List<image>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ViewBag.заголовок_страницы = "Создать фотоальбом (страница тестовая)";
+    }
+
+    void добавить()
+    {
+        images.Add(new image());
+    }
+
+    void удалить(image image)
+    {
+        images.Remove(image);
+    }
+}
