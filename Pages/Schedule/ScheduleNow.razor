@@ -1,0 +1,42 @@
+﻿@page "/schedule"
+@using System.Globalization
+@inject ISchedulesService SchedulesService
+
+
+<h3>Schedule</h3>
+
+<div class="table-responsive">
+    <table class="table table-sm ">
+        <thead>
+            <tr class="bg-secondary border-secondary text-white">
+                <th scope="col">Дата</th>
+                <th scope="col">Праздник</th>
+                <th scope="col"><div class="text-right mr-5">Время</div></th>
+                <th scope="col">Служба</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var str in schedule)
+            {
+                <tr>
+                    <th scope="row" width="15%">@str.date_and_time.Day, @CultureInfo.GetCultureInfo("ru-RU").DateTimeFormat.GetDayName(str.date_and_time.DayOfWeek)</th>
+                    <th scope="row" width="45%">@str.description</th>
+                    <th scope="row" width="10%"><div class="text-right mr-5">@str.date_and_time.ToShortTimeString()</div></th>
+                    <th scope="row" width="20%">@schedule_string.GetDescription(Enum.Parse<тип_службы>(str.prayer.ToString()))</th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+@code {
+    public List<schedule_string> schedule { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        schedule = SchedulesService.schedule(DateTime.Now);
+    }
+}
