@@ -27,6 +27,6 @@ namespace blazorControlPanel.Models
         public DateTime updated { get; set; }
 
         public int? postID { get; set; }
-        public int? imageAlbumID { get; set; }
+        public int? imagesAlbumID { get; set; }
     }
 }

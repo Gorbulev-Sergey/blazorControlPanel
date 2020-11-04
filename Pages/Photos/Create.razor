@@ -2,6 +2,8 @@
 @inject IViewBag ViewBag
 @inject IPhotosService PhotosService
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider 
+@inject Microsoft.AspNetCore.Identity.UserManager<user> UserManager
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     @*Заголовок страницы*@
@@ -20,7 +22,7 @@
     </div>
 </div>
 
-<div class="tab-content" id="nav-tabContent">
+<div class="tab-content">
     @*Обложка публикации*@
     <div class="tab-pane fade show active" id="list-home">
         <div class="row">
@@ -42,7 +44,7 @@
     @*Содержимое публикации*@
     <div class="tab-pane fade" id="list-images">
         <div class="mb-3">
-            <button class="btn btn-secondary" @onclick="()=>добавить()">Добавить фотографию&nbsp;<i class="fas fa-plus-circle text-primary"></i></button>
+            <button class="btn btn-light" @onclick="()=>добавить()"><i class="fas fa-plus-circle text-white"></i> Добавить фотографию</button>
         </div>
         @foreach (var image in album.images)
         {
@@ -63,6 +65,7 @@
     protected override async Task OnInitializedAsync()
     {
         ViewBag.заголовок_страницы = "Создать фотоальбом";
+        album.userId = (await UserManager.FindByNameAsync((await AuthenticationStateProvider.GetAuthenticationStateAsync()).User.Identity.Name)).Id;
     }
 
     void добавить()
