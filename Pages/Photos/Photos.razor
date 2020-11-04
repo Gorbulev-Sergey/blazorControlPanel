@@ -1,6 +1,7 @@
 ﻿@page "/photos"
 @inject IViewBag ViewBag
 @inject IPhotosService PhotosService
+@inject NavigationManager NavigationManager
 
 
 
@@ -9,8 +10,8 @@
         {
             <Album album="album">
                 <Navigation>
-                    <button class="btn btn-light">Редактировать</button>
-                    <button class="btn btn-light">Удалить</button>
+                    <button class="btn btn-light mr-1" @onclick="()=>изменить(album)"><i class="fas fa-pencil-alt"></i></button>
+                    <button class="btn btn-light" @onclick="()=>удалить(album)"><i class="fas text-danger fa-trash-alt"></i></button>
                 </Navigation>
             </Album>
         }
@@ -20,9 +21,21 @@
 
 @code { 
     public List<imagesAlbum> albums = new List<imagesAlbum>();
+
     protected override async Task OnInitializedAsync()
     {
         ViewBag.заголовок_страницы = "Фотографии";
         albums = await PhotosService.imagesAlbums();
+    }
+
+    void изменить(imagesAlbum album)
+    {
+        NavigationManager.NavigateTo("/photos/edit");
+    }
+
+    void удалить(imagesAlbum album)
+    {
+        PhotosService.delete(album.ID);
+        albums.Remove(album);
     }
 }

@@ -21,7 +21,6 @@
 
 
 <div class="col mb-3">
-
     <div class="card bg-dark text-white">
         <img src="@album.cover_image" class="card-img">
         <div class="card-img-overlay">
@@ -30,11 +29,10 @@
             <div class="text-secondary">фотографий в альбоме:<span class="badge badge-light badge-pill">@album.images.Count</span></div>
             <div class="text-secondary">опубликован: <span class="badge badge-light badge-pill">@album.created.ToShortDateString()</span></div>
         </div>
-        <div class="card-body position-absolute fixed-bottom">
-                @Navigation            
-        </div>        
+        <div class="card-body position-absolute fixed-bottom d-flex justify-content-center">
+            @Navigation
+        </div>
     </div>
-
 </div>
 
 

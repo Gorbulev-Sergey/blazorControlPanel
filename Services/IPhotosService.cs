@@ -13,7 +13,7 @@ namespace blazorControlPanel.Services
         Task<List<imagesAlbum>> imagesAlbums();
         Task<string> create(imagesAlbum album);
         Task<int> update(imagesAlbum album);
-        Task<int> delete(int id);
+        Task delete(int id);
     }
 
     public class PhotosService : IPhotosService
@@ -37,9 +37,10 @@ namespace blazorControlPanel.Services
             return "Фотоальбом создан";
         }
 
-        public Task<int> delete(int id)
+        public async Task delete(int id)
         {
-            throw new NotImplementedException();
+            _context.imagesAlbums.Remove(_context.imagesAlbums.Include(i => i.images).FirstOrDefault(a => a.ID == id));
+            await _context.SaveChangesAsync();
         }        
 
         public Task<int> update(imagesAlbum album)
