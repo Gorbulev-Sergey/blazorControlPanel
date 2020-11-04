@@ -44,7 +44,7 @@
     @*Содержимое публикации*@
     <div class="tab-pane fade" id="list-images">
         <div class="mb-3">
-            <button class="btn btn-light" @onclick="()=>добавить()"><i class="fas fa-plus-circle text-white"></i> Добавить фотографию</button>
+            <button class="btn btn-secondary" @onclick="()=>добавить()">Добавить фотографию <i class="fas fa-plus-circle text-white"></i></button>
         </div>
         @foreach (var image in album.images)
         {
