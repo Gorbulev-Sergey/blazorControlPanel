@@ -11,8 +11,9 @@ namespace blazorControlPanel.Services
     interface IPhotosService
     {
         Task<List<imagesAlbum>> imagesAlbums();
+        Task<imagesAlbum> imagesAlbum(int id);
         Task<string> create(imagesAlbum album);
-        Task<int> update(imagesAlbum album);
+        Task update(imagesAlbum album);
         Task delete(int id);
     }
 
@@ -29,6 +30,10 @@ namespace blazorControlPanel.Services
         {
             return await _context.imagesAlbums.Include(i=>i.images).ToListAsync();
         }
+        public async Task<imagesAlbum> imagesAlbum(int id)
+        {
+            return await _context.imagesAlbums.Include(i => i.images).FirstOrDefaultAsync(a=>a.ID==id);
+        }
 
         public async Task<string> create(imagesAlbum album)
         {
@@ -43,9 +48,10 @@ namespace blazorControlPanel.Services
             await _context.SaveChangesAsync();
         }        
 
-        public Task<int> update(imagesAlbum album)
+        public async Task update(imagesAlbum album)
         {
-            throw new NotImplementedException();
+            _context.Update<imagesAlbum>(album);
+            await _context.SaveChangesAsync();
         }
     }
 }

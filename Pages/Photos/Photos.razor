@@ -30,7 +30,7 @@
 
     void изменить(imagesAlbum album)
     {
-        NavigationManager.NavigateTo("/photos/edit");
+        NavigationManager.NavigateTo($"/photos/edit/{album.ID}");
     }
 
     void удалить(imagesAlbum album)
