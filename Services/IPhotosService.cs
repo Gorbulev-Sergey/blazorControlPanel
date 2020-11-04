@@ -27,7 +27,7 @@ namespace blazorControlPanel.Services
         
         public async Task<List<imagesAlbum>> imagesAlbums()
         {
-            return await _context.imagesAlbums.ToListAsync();
+            return await _context.imagesAlbums.Include(i=>i.images).ToListAsync();
         }
 
         public async Task<string> create(imagesAlbum album)
