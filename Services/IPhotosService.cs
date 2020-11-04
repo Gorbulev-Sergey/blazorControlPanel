@@ -12,7 +12,7 @@ namespace blazorControlPanel.Services
     {
         Task<List<imagesAlbum>> imagesAlbums();
         Task<imagesAlbum> imagesAlbum(int id);
-        Task<string> create(imagesAlbum album);
+        Task create(imagesAlbum album);
         Task update(imagesAlbum album);
         Task delete(int id);
     }
@@ -35,11 +35,10 @@ namespace blazorControlPanel.Services
             return await _context.imagesAlbums.Include(i => i.images).FirstOrDefaultAsync(a=>a.ID==id);
         }
 
-        public async Task<string> create(imagesAlbum album)
+        public async Task create(imagesAlbum album)
         {
             _context.imagesAlbums.Add(album);
             await _context.SaveChangesAsync();
-            return "Фотоальбом создан";
         }
 
         public async Task delete(int id)

@@ -28,18 +28,15 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="form-group">
-                    <label for="title" class="control-label">Название</label>
-                    <input id="title" class="form-control" @bind="album.title" />
+                    <input class="form-control" placeholder="Название" @bind="album.title" />
                 </div>
                 <div class="form-group">
-                    <label for="description" class="control-label">Описание</label>
-                    <input id="description" class="form-control" @bind="album.description" />
+                    <textarea rows="4" class="form-control" placeholder="Описание" @bind="album.description" />
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="cover_image" class="control-label">Url обложки</label>
-                    <input id="cover_image" class="form-control" @bind="album.cover_image" />
+                    <input class="form-control" placeholder="Url обложки" @bind="album.cover_image" />
                     <img class="card-img w-100 mt-3" src="@album.cover_image" />
                 </div>
             </div>
