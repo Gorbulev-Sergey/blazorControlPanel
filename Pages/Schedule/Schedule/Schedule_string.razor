@@ -1,6 +1,6 @@
 ﻿@using System.Globalization
 
-<tr>
+<tr class="@цвет_фона">
     @if (date_show)
     {
         <th scope="row" width="15%">@schedule_string.date_and_time.Day, @CultureInfo.GetCultureInfo("ru-RU").DateTimeFormat.GetDayName(schedule_string.date_and_time.DayOfWeek)</th>
@@ -23,6 +23,8 @@
     [Parameter]
     public bool date_show { get; set; }
 
+    string цвет_фона;
+
     string маркер_праздника
     {
         get
@@ -36,6 +38,14 @@
                 case тип_праздника.primary: return "text-primary font-weight-bold text-uppercase";
             }
             return "";
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (schedule_string.date_and_time.DayOfWeek == DayOfWeek.Sunday)
+        {
+            цвет_фона = "table-primary";
         }
     }
 }
