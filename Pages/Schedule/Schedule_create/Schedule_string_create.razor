@@ -1,0 +1,90 @@
+﻿@using System.Globalization
+
+<tr class="@цвет_фона">
+    <th scope="row" width="15%" rowspan="2"><div class="form-control border-0 font-weight-bold bg-transparent">@schedule_string.date_and_time.Day, @CultureInfo.GetCultureInfo("ru-RU").DateTimeFormat.GetDayName(schedule_string.date_and_time.DayOfWeek)</div></th>
+    <th scope="row" width="45%"><input class="form-control border-0 bg-transparent h-auto @цвет_или_формат_праздника" @bind="@schedule_string.description" multiple /></th>
+    <th scope="row" width="10%">
+        @if (время.ToShortTimeString() != "0:00")
+        {
+            <input type="time" class="form-control border-0 font-weight-bold bg-transparent" @bind="время" />
+        }
+        else
+        {
+            <input type="time" class="form-control border-0 text-white  bg-transparent" style="@цвет_пустого_времени" @bind="время" />
+        }
+    </th>
+    <th scope="row" width="20%">
+        <select class="form-control border-0 bg-transparent" @bind="schedule_string.prayer" title="Тип публикации">
+            @foreach (var t in type.GetNames(typeof(тип_службы)).ToList())
+            {
+                <option class="bg-light" value="@t">@schedule_string.GetDescription(Enum.Parse<тип_службы>(t))</option>
+            }
+        </select>
+    </th>
+    <th scope="row" width="10%">
+        <select class="form-control border-0 bg-transparent" @bind="маркер_праздника" title="Тип публикации">
+            @foreach (var t in type.GetNames(typeof(тип_праздника)).ToList())
+            {
+                <option class="bg-light" value="@t">@schedule_string.GetDescription(Enum.Parse<тип_праздника>(t))</option>
+            }
+        </select>
+    </th>
+</tr>
+
+
+
+@code {
+    [Parameter]
+    public schedule_string schedule_string { get; set; }
+
+    private string цвет_фона, цвет_пустого_времени, цвет_или_формат_праздника;
+
+    private тип_праздника маркер_праздника
+    {
+        get { return schedule_string.тип_праздника; }
+        set
+        {
+            switch (value)
+            {
+                case тип_праздника.пусто:
+                    цвет_или_формат_праздника = "";
+                    break;
+                case тип_праздника.жирный:
+                    цвет_или_формат_праздника = "font-weight-bold";
+                    break;
+                case тип_праздника.курсив:
+                    цвет_или_формат_праздника = "font-italic";
+                    break;
+                case тип_праздника.жирный_заглавный:
+                    цвет_или_формат_праздника = "font-weight-bold text-uppercase";
+                    break;
+                case тип_праздника.primary:
+                    цвет_или_формат_праздника = "text-primary font-weight-bold text-uppercase";
+                    break;
+            }
+            schedule_string.тип_праздника = value;
+        }
+    }
+
+    public DateTime время
+    {
+        get {
+            return DateTime.Parse(schedule_string.date_and_time.ToShortTimeString());
+        }
+        set
+        {
+            schedule_string.date_and_time = DateTime.Parse(String.Format("{0} {1}", schedule_string.date_and_time.ToShortDateString(), value.ToShortTimeString()));
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        if (schedule_string.date_and_time.DayOfWeek==DayOfWeek.Sunday)
+        {
+            цвет_фона = "table-primary";
+            цвет_пустого_времени = "color:#b8daff!important";
+        }
+
+        маркер_праздника = schedule_string.тип_праздника;
+    }
+}

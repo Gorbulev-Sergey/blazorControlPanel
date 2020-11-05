@@ -1,34 +1,43 @@
-﻿<div class="table-responsive">
+﻿@using System.Globalization
+@inject ISchedulesService SchedulesService
+
+<div class="table-responsive">
     <table class="table table-sm ">
         <thead>
             <tr class="bg-secondary border-secondary text-white">
-                <th scope="col"><div class="ml-3">Дата</div></th>
-                <th scope="col"><div class="ml-2">Праздник</div></th>
-                <th scope="col"><div class="ml-2">Время</div></th>
-                <th scope="col"><div class="ml-3">Служба</div></th>
-                <th scope="col"><div class="ml-3">Тип</div></th>
+                <th scope="col">Дата</th>
+                <th scope="col">Праздник</th>
+                <th scope="col"><div class="text-right mr-5">Время</div></th>
+                <th scope="col">Служба</th>
             </tr>
         </thead>
         <tbody>
             @{int дата_предыдущего = 0; }
             @foreach (var str in schedule)
             {
-                if (дата_предыдущего == str.date_and_time.Day)
+                if (дата_предыдущего != str.date_and_time.Day)
                 {
-                    <Schedule_string2 schedule_string="str"></Schedule_string2>
+                    <Schedule_string schedule_string="str" date_show="true"></Schedule_string>
+                    дата_предыдущего = str.date_and_time.Day;                    
                 }
                 else
                 {
-                    <Schedule_string schedule_string="str"></Schedule_string>
-                    дата_предыдущего = str.date_and_time.Day;
+                    <Schedule_string schedule_string="str" date_show="false"></Schedule_string>
                 }
             }
         </tbody>
     </table>
 </div>
 
-
 @code {
     [Parameter]
+    public DateTime date { get; set; }
+
     public List<schedule_string> schedule { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        schedule = SchedulesService.schedule(date);
+    }
+
 }

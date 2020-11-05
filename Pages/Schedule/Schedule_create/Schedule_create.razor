@@ -1,0 +1,34 @@
+﻿<div class="table-responsive">
+    <table class="table table-sm ">
+        <thead>
+            <tr class="bg-secondary border-secondary text-white">
+                <th scope="col"><div class="ml-3">Дата</div></th>
+                <th scope="col"><div class="ml-2">Праздник</div></th>
+                <th scope="col"><div class="ml-2">Время</div></th>
+                <th scope="col"><div class="ml-3">Служба</div></th>
+                <th scope="col"><div class="ml-3">Тип</div></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int дата_предыдущего = 0; }
+            @foreach (var str in schedule)
+            {
+                if (дата_предыдущего == str.date_and_time.Day)
+                {
+                    <Schedule_string2_create schedule_string="str"></Schedule_string2_create>
+                }
+                else
+                {
+                    <Schedule_string_create schedule_string="str"></Schedule_string_create>
+                    дата_предыдущего = str.date_and_time.Day;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@code {
+    [Parameter]
+    public List<schedule_string> schedule { get; set; }
+}
