@@ -2,6 +2,7 @@
 @inject IViewBag ViewBag
 @inject IPhotosService PhotosService
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
 
 
 
@@ -18,9 +19,12 @@
     }
 </div>
 
+<Modal_album2 album="selectedAlbum" скрыть_окно="скрыть"></Modal_album2>
+
 
 @code {
     public List<imagesAlbum> albums = new List<imagesAlbum>();
+    imagesAlbum selectedAlbum = new imagesAlbum();
 
     protected override async Task OnInitializedAsync()
     {
@@ -28,9 +32,16 @@
         albums = await PhotosService.imagesAlbums();
     }
 
-    void показать(imagesAlbum album)
+    async Task показать(imagesAlbum album)
     {
-        NavigationManager.NavigateTo($"/photos/modal_album/{album.ID}");
+        selectedAlbum = album;
+        await JSRuntime.InvokeAsync<string>("Show_album", "modal_album");
+    }
+
+    async Task скрыть()
+    {
+        selectedAlbum = new imagesAlbum();
+        await JSRuntime.InvokeAsync<string>("Hidden_album", "modal_album");
     }
 
     void изменить(imagesAlbum album)
