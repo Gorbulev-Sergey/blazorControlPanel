@@ -3,40 +3,6 @@
 @inject IPhotosService PhotosService
 @inject NavigationManager NavigationManager
 
-<!--<div id="modal_album" class="bg-dark border-0 m-0 p-0 position-relative" style="width:100vw; height:100vh" tabindex="-1">
-    <!--Содержимое диалогового окна-->
-    <!--<div id="carouselControls" class=" class="carousel slide border-0 position-absolute" style="top:50%; left:50%; transform: translate(-50%, -50%); width:100vw; height:100vh" data-ride="carousel">
-        <div id="images" class="carousel-inner" style="top:50%; left:50%; transform: translate(-50%, -50%);">
-            @foreach (var photo in album.images)
-            {
-                if (photo == album.images.ElementAt(0))
-                {
-                    <div class="carousel-item active text-center">
-                        <img class="img-fluid" style="max-height:100vh" src="@photo.url">
-                    </div>
-                }
-                <div class="carousel-item text-center">
-                    <img class="img-fluid" style="max-height:100vh" src="@photo.url">
-                </div>
-            }
-        </div>
-        <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselControls" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>-->
-    @*Кнопка закрыть диалоговое окно*@
-    @*<button type="button" class="close text-white p-2 m-2 position-absolute" style="z-index:10; right:0; top:0" @onclick="()=>закрыть()">
-        <i class="fas fa-times"></i>
-    </button>
-</div>-->*@
-
-
-
 <div id="modal_album" class="bg-dark m-0 p-0" tabindex="-1">
     @*Кнопка закрыть диалоговое окно*@
     <button type="button" class="close text-white p-2 m-2 position-absolute" style="z-index:10; right:0; top:0" @onclick="()=>закрыть()">
@@ -44,6 +10,13 @@
     </button>
     @*Содержимое диалогового окна*@
     <div id="carouselControls" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselControls" data-slide-to="0" class="active"></li>
+            @for (int i = 1; i < album.images.Count; i++)
+            {
+                <li data-target="#carouselControls" data-slide-to="@i"></li>
+            }
+        </ol>
         <div class="carousel-inner">
             @foreach (var photo in album.images)
             {
@@ -71,9 +44,6 @@
         </a>
     </div>
 </div>
-
-
-
 
 
 @code {
