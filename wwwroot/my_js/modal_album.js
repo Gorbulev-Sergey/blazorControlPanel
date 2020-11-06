@@ -12,6 +12,6 @@ var Hidden_album = function (modal) {
 $(document).on('fullscreenchange', function () {
     if (!document.fullscreenElement) {
         document.exitFullscreen();
-        Hidden_album("modal_album");
+        Hidden_album(_modal);
     }
 });

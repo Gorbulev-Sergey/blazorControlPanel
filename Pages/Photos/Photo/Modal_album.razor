@@ -1,11 +1,6 @@
-﻿@page "/photos/modal_album/{ID:int}"
-@inject IJSRuntime JSRuntime
-@inject IPhotosService PhotosService
-@inject NavigationManager NavigationManager
-
-<div id="modal_album" class="bg-dark m-0 p-0" tabindex="-1">
+﻿<div id="modal_album" class="modal bg-dark m-0 p-0" tabindex="-1">
     @*Кнопка закрыть диалоговое окно*@
-    <button type="button" class="close text-white p-2 m-2 position-absolute" style="z-index:10; right:0; top:0" @onclick="()=>закрыть()">
+    <button type="button" class="close text-white p-2 m-2 position-absolute" style="z-index:10; right:0; top:0" @onclick="скрыть_окно">
         <i class="fas fa-times"></i>
     </button>
     @*Содержимое диалогового окна*@
@@ -45,26 +40,10 @@
     </div>
 </div>
 
-
 @code {
     [Parameter]
-    public int ID { get; set; }
+    public imagesAlbum album { get; set; } = new imagesAlbum();
 
-    imagesAlbum album = new imagesAlbum();
-
-    protected override async Task OnInitializedAsync()
-    {
-        album = await PhotosService.imagesAlbum(ID);
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await JSRuntime.InvokeAsync<string>("Show_album", "modal_album");
-    }
-
-    async Task закрыть()
-    {
-        await JSRuntime.InvokeAsync<string>("Hidden_album", "modal_album");
-        NavigationManager.NavigateTo("/photos");
-    }
+    [Parameter]
+    public EventCallback скрыть_окно { get; set; }
 }
