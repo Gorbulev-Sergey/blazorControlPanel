@@ -5,27 +5,32 @@
 
 
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
-        @foreach (var album in albums.OrderByDescending(d => d.updated))
-        {
-            <Album album="album">
-                <Navigation>
-                    <button class="btn btn-light mr-1" @onclick="()=>изменить(album)"><i class="fas fa-pencil-alt"></i></button>
-                    <button class="btn btn-light" @onclick="()=>удалить(album)"><i class="fas text-danger fa-trash-alt"></i></button>
-                </Navigation>
-            </Album>
-        }
-    </div>    
+<div class="row row-cols-1 row-cols-md-2 row-cols-xl-2">
+    @foreach (var album in albums.OrderByDescending(d => d.updated))
+    {
+        <Album album="album">
+            <Navigation>
+                <button class="btn btn-light mr-1" @onclick="()=>показать(album)"><i class="far fa-eye"></i></button>
+                <button class="btn btn-light mr-1" @onclick="()=>изменить(album)"><i class="fas fa-pencil-alt"></i></button>
+                <button class="btn btn-light" @onclick="()=>удалить(album)"><i class="fas text-danger fa-trash-alt"></i></button>
+            </Navigation>
+        </Album>
+    }
+</div>
 
 
-
-@code { 
+@code {
     public List<imagesAlbum> albums = new List<imagesAlbum>();
 
     protected override async Task OnInitializedAsync()
     {
         ViewBag.заголовок_страницы = "Фотографии";
         albums = await PhotosService.imagesAlbums();
+    }
+
+    void показать(imagesAlbum album)
+    {
+        NavigationManager.NavigateTo($"/photos/modal_album/{album.ID}");
     }
 
     void изменить(imagesAlbum album)
