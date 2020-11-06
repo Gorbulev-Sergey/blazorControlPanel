@@ -15,3 +15,13 @@ $(document).on('fullscreenchange', function () {
         Hidden_album(_modal);
     }
 });
+
+
+
+
+var Show_Ask_remove_album = function (modal_remove) {
+    $("#" + modal_remove).modal('show');
+};
+var Hide_Ask_remove_album = function (modal_remove) {
+    $("#" + modal_remove).modal('hide');
+}

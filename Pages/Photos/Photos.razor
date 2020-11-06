@@ -13,7 +13,7 @@
             <Navigation>
                 <button class="btn btn-light mr-1" @onclick="()=>показать(album)"><i class="far fa-eye"></i></button>
                 <button class="btn btn-light mr-1" @onclick="()=>изменить(album)"><i class="fas fa-pencil-alt"></i></button>
-                <button class="btn btn-light" @onclick="()=>удалить(album)"><i class="fas text-danger fa-trash-alt"></i></button>
+                <button class="btn btn-light" @onclick="()=>запрос_на_удаление(album)"><i class="fas text-danger fa-trash-alt"></i></button>
             </Navigation>
         </Album>
     }
@@ -21,6 +21,7 @@
 
 
 <Modal_album album="selectedAlbum" скрыть_окно="скрыть"></Modal_album>
+<Modal_remove_albume album="selectedAlbum" удалить_фотоальбом="()=>удалить(selectedAlbum)"></Modal_remove_albume>
 
 
 @code {
@@ -35,7 +36,7 @@
 
     async Task показать(imagesAlbum album)
     {
-        selectedAlbum = new imagesAlbum(); 
+        selectedAlbum = new imagesAlbum();
         await JSRuntime.InvokeAsync<string>("Hidden_album", "modal_album");
         selectedAlbum = album;
         await JSRuntime.InvokeAsync<string>("Show_album", "modal_album");
@@ -52,9 +53,16 @@
         NavigationManager.NavigateTo($"/photos/edit/{album.ID}");
     }
 
-    void удалить(imagesAlbum album)
+    async Task запрос_на_удаление(imagesAlbum album)
     {
-        PhotosService.delete(album.ID);
+        selectedAlbum = album;
+        await JSRuntime.InvokeAsync<string>("Show_Ask_remove_album", "modal_remove_album");
+    }
+
+    async Task удалить(imagesAlbum album)
+    {
+        await PhotosService.delete(album.ID);
         albums.Remove(album);
+        await JSRuntime.InvokeAsync<string>("Hide_Ask_remove_album", "modal_remove_album");
     }
 }
