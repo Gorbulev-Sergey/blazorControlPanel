@@ -34,6 +34,8 @@
 
     async Task показать(imagesAlbum album)
     {
+        selectedAlbum = new imagesAlbum(); 
+        await JSRuntime.InvokeAsync<string>("Hidden_album", "modal_album");
         selectedAlbum = album;
         await JSRuntime.InvokeAsync<string>("Show_album", "modal_album");
     }

@@ -1,4 +1,7 @@
-﻿var Show_album = function (modal) {
+﻿var _modal;
+
+var Show_album = function (modal) {
+    _modal = modal;
     document.getElementById(modal).requestFullscreen();
     $("#"+ modal).modal('show');
 };
@@ -6,13 +9,9 @@ var Hidden_album = function (modal) {
     document.exitFullscreen();
     $("#" + modal).modal('hide');
 };
-$(document).ready(function () {
-    if (document.fullscreenElement) {
-        Hidden_album();
-    }
-});
-document.addEventListener('fullscreenchange', (event) => {
+$(document).on('fullscreenchange', function () {
     if (!document.fullscreenElement) {
         document.exitFullscreen();
+        Hidden_album("modal_album");
     }
 });
