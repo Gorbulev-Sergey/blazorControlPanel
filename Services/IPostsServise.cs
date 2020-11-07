@@ -19,8 +19,7 @@ namespace blazorControlPanel.Services
         event Action Фильтр_изменён;
         void Изменить_фильтр();
     }
-
-    [Authorize(Roles ="администратор, редактор")]
+        
     public class PostsService : IPostsServise
     {
         ApplicationDbContext _context;        

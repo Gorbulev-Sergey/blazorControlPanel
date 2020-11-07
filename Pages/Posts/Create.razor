@@ -1,4 +1,5 @@
 ﻿@page "/posts/create"
+@attribute [Authorize(Roles = "администратор")]
 @inject IPostsServise PostsService
 @inject IViewBag ViewBag
 @inject NavigationManager NavigationManager

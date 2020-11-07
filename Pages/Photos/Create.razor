@@ -1,8 +1,9 @@
 ﻿@page "/photos/create"
+@attribute [Authorize(Roles = "администратор")]
 @inject IViewBag ViewBag
 @inject IPhotosService PhotosService
 @inject NavigationManager NavigationManager
-@inject AuthenticationStateProvider AuthenticationStateProvider 
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject Microsoft.AspNetCore.Identity.UserManager<user> UserManager
 
 <div class="d-flex justify-content-between align-items-center mb-3">

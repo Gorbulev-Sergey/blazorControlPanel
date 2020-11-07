@@ -1,4 +1,5 @@
 ﻿@page "/posts"
+@attribute [Authorize(Roles = "администратор")]
 @inject IPostsServise PostsService
 @inject IViewBag ViewBag
 
@@ -21,7 +22,7 @@
     <select class="btn btn-light" @bind="дата" title="Порядок сортировки">
         @foreach (var t in type.GetNames(typeof(фильтр_дата)).ToList())
         {
-            <option class="bg-light" value="@t.Replace("_"," ")">@t.Replace("_"," ")</option>
+            <option class="bg-light" value="@t.Replace("_"," ")">@t.Replace("_", " ")</option>
         }
     </select>
 

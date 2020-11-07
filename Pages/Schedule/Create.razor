@@ -1,11 +1,12 @@
 ﻿@page "/schedule/create"
+@attribute [Authorize(Roles = "администратор")]
 @inject IViewBag ViewBag
 @inject ISchedulesService SchedulesService
 
 <div class="d-flex justify-content-between mb-3">
     <div>
         <input id="select_date" type="month" class="btn btn-light" placeholder="месяц" @bind="месяц_и_год_расписания" title="Выберите дату" />
-    </div>    
+    </div>
     <div>
         <a class="btn btn-secondary" href="/schedule">Отмена</a>
         <button class="btn btn-primary" @onclick="()=>сохранить_данные()">Сохранить</button>

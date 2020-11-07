@@ -61,6 +61,7 @@ namespace blazorControlPanel
                     options.ClientSecret = "QGB9vZBryvr7gpEXB7vK";
                 });
             services.AddSingleton<IViewBag, ViewBag>();
+            services.AddTransient<IUsersServices, UsersServices>();
             services.AddTransient<IPostsServise, PostsService>();
             services.AddTransient<IPhotosService, PhotosService>();
             services.AddTransient<ISchedulesService, ScheduleService>();

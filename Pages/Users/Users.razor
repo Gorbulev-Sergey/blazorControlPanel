@@ -1,15 +1,25 @@
 ﻿@page "/users"
+@attribute [Authorize(Roles = "администратор")]
 @inject Microsoft.AspNetCore.Identity.UserManager<user> userManager
 @inject IViewBag ViewBag
 
 
-<div>
-    @foreach (var user in userManager.Users)
-    {
-        <div class="mb-3">
-            <div class="col">@user.UserName</div>
-        </div>
-    }
+
+<div class="table-responsive">
+    <table class="table ">
+        <thead>
+            <tr class="bg-secondary border-secondary text-white">
+                <th scope="col" class="mr-1">Логин</th>
+                <th scope="col">Роль</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in userManager.Users)
+            {
+                <User user="user"></User>
+            }
+        </tbody>
+    </table>
 </div>
 
 

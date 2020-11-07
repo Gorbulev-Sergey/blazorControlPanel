@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace blazorControlPanel.Services
         string заголовок_страницы { get; set; }
         event Action Заголовок_изменён;
     }
-
+        
     public class ViewBag : IViewBag
     {
         private string _Заголовок_страницы;
