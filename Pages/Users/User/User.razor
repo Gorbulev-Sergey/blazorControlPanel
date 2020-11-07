@@ -1,19 +1,18 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject UserManager<user> UserManager 
 
 <tr>
     <th scope="row">@user.UserName</th>
-    <th scope="row">@role</th>
+    <th scope="row">@user.PhoneNumber</th>
 </tr>
 
 @code {
     [Parameter]
     public user user { get; set; }
 
-    string role;
+
 
     protected override async Task OnInitializedAsync()
     {
-        role = (await UserManager.GetRolesAsync(user)).ToList().FirstOrDefault();
+        //role = (await UserManager.GetRolesAsync(user)).ToList().FirstOrDefault();
     }
 }
