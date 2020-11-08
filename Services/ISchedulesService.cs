@@ -19,42 +19,49 @@ namespace blazorControlPanel.Services
 
     public class ScheduleService : ISchedulesService
     {
-        private ApplicationDbContext _context;
-        public ScheduleService(ApplicationDbContext context)
+        //ApplicationDbContext _context;
+        DbContextOptions<ApplicationDbContext> _options;
+        public ScheduleService(ApplicationDbContext context, DbContextOptions<ApplicationDbContext> options)
         {
-            _context = context;
+            //_context = context;
+            _options = options;
         }
         public List<schedule_string> schedule(DateTime schedule_year_and_month) 
-        { 
-            return _context.schedule.Where(s => s.date_and_time.Year == schedule_year_and_month.Year && s.date_and_time.Month == schedule_year_and_month.Month).OrderBy(d=>d.date_and_time).ToList();
+        {
+            using (var context = new ApplicationDbContext(_options))
+            {
+                return context.schedule.Where(s => s.date_and_time.Year == schedule_year_and_month.Year && s.date_and_time.Month == schedule_year_and_month.Month).OrderBy(d=>d.date_and_time).ToList();
+            }
         }
         public async Task update_or_create(List<schedule_string> schedule)
         {
-            foreach (var str in schedule)
+            using (var context = new ApplicationDbContext(_options))
+            {
+                foreach (var str in schedule)
             {
                 // сохраняем или меняем
                 if (!String.IsNullOrEmpty(str.description) || !String.IsNullOrWhiteSpace(str.description) || str.prayer != тип_службы.пусто || str.date_and_time.ToString() == "0:00")
                 {                    
                     try
                     {
-                        _context.Update(str);
+                        context.Update(str);
                     }
                     catch
                     {
-                        _context.schedule.Add(str);
+                        context.schedule.Add(str);
                     }
                 }
             }
-            await _context.SaveChangesAsync();
-
-            foreach (var str in _context.schedule)
+                await context.SaveChangesAsync();
+                
+                foreach (var str in context.schedule)
             {
                 // Очищаем пустые строки в бд, которые могли попасть после обновления данных
                 if (String.IsNullOrEmpty(str.description) && str.prayer == тип_службы.пусто && str.date_and_time.ToShortTimeString() == "0:00")
                 {
                     try
                     {
-                        _context.Remove(str);
+                        context.Remove(str);
                     }
                     catch
                     {
@@ -62,18 +69,20 @@ namespace blazorControlPanel.Services
                     }
                 }
             }
-            await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
+            }            
         }
         public async Task delete(List<schedule_string> schedule)
         {
-            foreach (var str in schedule)
+            using (var context = new ApplicationDbContext(_options))
             {
-                try { _context.schedule.Remove(str); }
-                catch { }
-            }
-            await _context.SaveChangesAsync();
-        }
-
-        
+                foreach (var str in schedule)
+                {
+                    try { context.schedule.Remove(str); }
+                    catch { }
+                }
+                await context.SaveChangesAsync();
+            }            
+        }        
     }
 }

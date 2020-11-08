@@ -22,39 +22,55 @@ namespace blazorControlPanel.Services
         
     public class PostsService : IPostsServise
     {
-        ApplicationDbContext _context;        
+        //ApplicationDbContext _context;
+        DbContextOptions<ApplicationDbContext> _options;  
 
-        public PostsService(ApplicationDbContext context)
+        public PostsService(ApplicationDbContext context, DbContextOptions<ApplicationDbContext> options)
         {
-            _context = context;
+            //_context = context;
+            _options = options;
         }
 
         public async Task<List<post>> posts()
         {
-            return await _context.posts.ToListAsync();
+            using (var context = new ApplicationDbContext(_options))
+            {
+                return await context.posts.ToListAsync();
+            }            
         }
 
         public async Task<string> create(post post)
         {
             if (post != null)
             {
-                _context.posts.Add(post);
-                await _context.SaveChangesAsync();
-                return "Сохранена";
+                using (var context = new ApplicationDbContext(_options))
+                {
+                    context.posts.Add(post);
+                    await context.SaveChangesAsync();
+                    return "Сохранена";
+                }                
             }
             return "Не сохранена";
         }
 
         public async Task<int> update(post post)
         {
-            _context.Entry(post).State = EntityState.Modified;            
-            return await _context.SaveChangesAsync();            
+            using (var context = new ApplicationDbContext(_options))
+            {
+                context.Entry(post).State = EntityState.Modified;   
+                return await context.SaveChangesAsync();
+            }
+                        
         }
 
         public async Task<int> delete(int id)
         {
-            _context.posts.Remove(_context.posts.FirstOrDefault(p=>p.ID==id));
-            return await _context.SaveChangesAsync();
+            using (var context = new ApplicationDbContext(_options))
+            {
+                context.posts.Remove(context.posts.FirstOrDefault(p=>p.ID==id));
+                return await context.SaveChangesAsync();
+            }
+            
         }
 
         public event Action Фильтр_изменён;
