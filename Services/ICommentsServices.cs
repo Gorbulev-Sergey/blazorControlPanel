@@ -16,14 +16,19 @@ namespace blazorControlPanel.Services
     public class CommentsServices : ICommentsServices
     {
         ApplicationDbContext _context;
+        DbContextOptions<ApplicationDbContext> _options;
 
-        public CommentsServices(ApplicationDbContext context)
+        public CommentsServices(ApplicationDbContext context, DbContextOptions<ApplicationDbContext> options)
         {
             _context = context;
+            _options = options;
         }
         public List<comment> comments()
         {
-            return _context.comments.ToList();
+            using(var context = new ApplicationDbContext(_options))
+            {
+                return context.comments.ToList();
+            }            
         }
     }
 }
