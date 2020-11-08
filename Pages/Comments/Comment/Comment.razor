@@ -1,0 +1,10 @@
+﻿<div class="row mb-1">
+    <div class="col">@comment.userName</div>
+    <div class="col">@comment.postID</div>
+    <div class="col">@comment.text</div>
+</div>
+
+@code {
+    [Parameter]
+    public comment comment { get; set; }
+}

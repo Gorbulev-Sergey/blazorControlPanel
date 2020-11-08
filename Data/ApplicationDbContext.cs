@@ -9,8 +9,7 @@ namespace blazorControlPanel.Data
 {
     public class ApplicationDbContext : IdentityDbContext<user>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
             Database.EnsureCreated();
             posts = Set<post>();
