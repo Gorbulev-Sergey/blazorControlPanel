@@ -52,8 +52,20 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input @bind="post.cover_image" class="form-control" placeholder="Url обложки" />
-                        <img class="card-img mt-3" src="@post.cover_image" />
+                        <input @bind="post.cover_image" class="form-control" placeholder="Обложка (url картинки)" />
+                        @if (!String.IsNullOrEmpty(post.cover_image))
+                        {
+                            <img class="card-img mt-3" src="@post.cover_image" />
+                        }                        
+                    </div>
+                    <div class="form-group">
+                        <input @bind="post.cover_video" class="form-control" placeholder="Обложка (url видео)" />
+                        @if (!String.IsNullOrEmpty(post.cover_video))
+                        {
+                            <div class="embed-responsive embed-responsive-16by9 mt-3">
+                                <iframe class="embed-responsive-item" src="@post.cover_video?rel=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        }                        
                     </div>
                 </div>
             </div>
