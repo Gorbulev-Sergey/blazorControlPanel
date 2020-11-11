@@ -28,6 +28,8 @@ namespace blazorControlPanel.Models
         public string title { get; set; }
         [Display(Name = "Url обложки"), DataType(DataType.ImageUrl)]
         public string cover_image { get; set; }
+        [Display(Name = "Url обложки (видео)"), DataType(DataType.ImageUrl)]
+        public string cover_video { get; set; }
         [Display(Name = "Краткое описание"), AllowHtml, DataType(DataType.Html)]
         public string description { get; set; }
         [Display(Name = "Содержимое"), AllowHtml, DataType(DataType.Html)]

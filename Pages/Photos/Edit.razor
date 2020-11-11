@@ -65,12 +65,12 @@
     [Parameter]
     public int ID { get; set; }
 
-    imagesAlbum album = new imagesAlbum();
+    imageAlbum album = new imageAlbum();
 
     protected override async Task OnInitializedAsync()
     {
         ViewBag.заголовок_страницы = "Редактировать фотоальбом";
-        album = await PhotosService.imagesAlbum(ID);
+        album = await PhotosService.imageAlbum(ID);
     }
 
     void добавить()

@@ -12,7 +12,7 @@ namespace blazorControlPanel.Models
         public user()
         {
             posts = new List<post>();
-            imageAlbums = new List<imagesAlbum>();
+            imageAlbums = new List<imageAlbum>();
             comments = new List<comment>();
             likes = new List<like>();
             schedule = new List<schedule_string>();
@@ -20,7 +20,7 @@ namespace blazorControlPanel.Models
         [PersonalData, Display(Name = "Публикации")]
         public virtual IList<post> posts { get; set; }
         [PersonalData, Display(Name = "Албомы фотографий")]
-        public virtual IList<imagesAlbum> imageAlbums { get; set; }
+        public virtual IList<imageAlbum> imageAlbums { get; set; }
         [PersonalData, Display(Name = "Комментарии")]
         public virtual IList<comment> comments { get; set; }
         [PersonalData, Display(Name = "Лайки")]

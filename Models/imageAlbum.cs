@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace blazorControlPanel.Models
 {
-    [Table(name: "imagesAlbums")]
-    public class imagesAlbum
+    [Table(name: "imageAlbums")]
+    public class imageAlbum
     {
-        public imagesAlbum()
+        public imageAlbum()
         {
             images = new List<image>();
             comments = new List<comment>();

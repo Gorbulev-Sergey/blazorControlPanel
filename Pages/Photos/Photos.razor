@@ -26,18 +26,18 @@
 
 
 @code {
-    public List<imagesAlbum> albums = new List<imagesAlbum>();
-    imagesAlbum selectedAlbum = new imagesAlbum();
+    public List<imageAlbum> albums = new List<imageAlbum>();
+    imageAlbum selectedAlbum = new imageAlbum();
 
     protected override async Task OnInitializedAsync()
     {
         ViewBag.заголовок_страницы = "Фотографии";
-        albums = await PhotosService.imagesAlbums();
+        albums = await PhotosService.imageAlbums();
     }
 
-    async Task показать(imagesAlbum album)
+    async Task показать(imageAlbum album)
     {
-        selectedAlbum = new imagesAlbum();
+        selectedAlbum = new imageAlbum();
         await JSRuntime.InvokeAsync<string>("Hidden_album", "modal_album");
         selectedAlbum = album;
         await JSRuntime.InvokeAsync<string>("Show_album", "modal_album");
@@ -45,22 +45,22 @@
 
     async Task скрыть()
     {
-        selectedAlbum = new imagesAlbum();
+        selectedAlbum = new imageAlbum();
         await JSRuntime.InvokeAsync<string>("Hidden_album", "modal_album");
     }
 
-    void изменить(imagesAlbum album)
+    void изменить(imageAlbum album)
     {
         NavigationManager.NavigateTo($"/photos/edit/{album.ID}");
     }
 
-    async Task запрос_на_удаление(imagesAlbum album)
+    async Task запрос_на_удаление(imageAlbum album)
     {
         selectedAlbum = album;
         await JSRuntime.InvokeAsync<string>("Show_Ask_remove_album", "modal_remove_album");
     }
 
-    async Task удалить(imagesAlbum album)
+    async Task удалить(imageAlbum album)
     {
         await PhotosService.delete(album.ID);
         albums.Remove(album);

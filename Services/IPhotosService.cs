@@ -11,10 +11,10 @@ namespace blazorControlPanel.Services
 {
     interface IPhotosService
     {
-        Task<List<imagesAlbum>> imagesAlbums();
-        Task<imagesAlbum> imagesAlbum(int id);
-        Task create(imagesAlbum album);
-        Task update(imagesAlbum album);
+        Task<List<imageAlbum>> imageAlbums();
+        Task<imageAlbum> imageAlbum(int id);
+        Task create(imageAlbum album);
+        Task update(imageAlbum album);
         Task delete(int id);
     }
 
@@ -29,26 +29,26 @@ namespace blazorControlPanel.Services
             _options = options;
         }
         
-        public async Task<List<imagesAlbum>> imagesAlbums()
+        public async Task<List<imageAlbum>> imageAlbums()
         {
             using (var context=new ApplicationDbContext(_options))
             {
-                return await context.imagesAlbums.Include(i => i.images).ToListAsync();
+                return await context.imageAlbums.Include(i => i.images).ToListAsync();
             }                
         }
-        public async Task<imagesAlbum> imagesAlbum(int id)
+        public async Task<imageAlbum> imageAlbum(int id)
         {
             using (var context = new ApplicationDbContext(_options))
             {
-                return await context.imagesAlbums.Include(i => i.images).FirstOrDefaultAsync(a => a.ID == id);
+                return await context.imageAlbums.Include(i => i.images).FirstOrDefaultAsync(a => a.ID == id);
             }            
         }
 
-        public async Task create(imagesAlbum album)
+        public async Task create(imageAlbum album)
         {
             using (var context = new ApplicationDbContext(_options))
             { 
-                context.imagesAlbums.Add(album);
+                context.imageAlbums.Add(album);
                 await context.SaveChangesAsync();
             }             
         }
@@ -57,16 +57,16 @@ namespace blazorControlPanel.Services
         {
             using (var context = new ApplicationDbContext(_options))
             {
-                context.imagesAlbums.Remove(context.imagesAlbums.Include(i => i.images).FirstOrDefault(a => a.ID == id));
+                context.imageAlbums.Remove(context.imageAlbums.Include(i => i.images).FirstOrDefault(a => a.ID == id));
                 await context.SaveChangesAsync();
             }            
         }        
 
-        public async Task update(imagesAlbum album)
+        public async Task update(imageAlbum album)
         {
             using (var context = new ApplicationDbContext(_options))
             {
-                context.Update<imagesAlbum>(album);
+                context.Update<imageAlbum>(album);
                 await context.SaveChangesAsync();
             }            
         }
