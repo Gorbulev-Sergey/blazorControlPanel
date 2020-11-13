@@ -1,16 +1,16 @@
 ﻿@inject ITagsService TagsService
 
 <div class="d-flex justify-content-start align-items-start mb-3">
-    <div class="input-group input-group-sm dropdown mr-3">
-        <input type="text" class="form-control" @bind="value" data-toggle="dropdown">
-        <div class="dropdown-menu">
+    <div class="input-group input-group-sm w-auto dropdown mr-3">
+        <input type="text" class="form-control" @bind="value" data-toggle="dropdown" placeholder="Добавить тег">
+        <div class="dropdown-menu w-100">
             @foreach (var tag in tags)
             {
                 <span class="dropdown-item" role="button" @onclick="()=>value=tag.text">@tag.text</span>
             }
         </div>
         <div class="input-group-append">
-            <button class="btn btn-dark" @onclick="()=>добавить(value)"><i class="fas fa-plus"></i></button>
+            <button class="btn btn-secondary" @onclick="()=>добавить(value)"><i class="fas fa-plus"></i></button>
         </div>
     </div>
     @foreach (var tag in newTags)
@@ -42,7 +42,7 @@
             {
                 if (!String.IsNullOrWhiteSpace(tag_text))
                 {
-                    var tag = new tag { text = tag_text };
+                    var tag = new tag { text = tag_text.ToLower() };
                     TagsService.add(tag);
                     tags.Add(tag);
                     newTags.Add(tag);
