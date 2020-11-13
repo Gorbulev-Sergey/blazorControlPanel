@@ -8,12 +8,10 @@
         </select>
         <button class="btn btn-dark" @onclick="()=>добавить(_selectedTag)"><i class="fas fa-plus"></i></button>
     </div>
-    
-        @foreach (var tag in newTags)
-        {
-            <Tag tag="tag" убрать="()=>убрать(tag)"></Tag>
-        }
-    
+    @foreach (var tag in newTags)
+    {
+        <Tag tag="tag" убрать="()=>убрать(tag)"></Tag>
+    }
 </div>
 
 @code {

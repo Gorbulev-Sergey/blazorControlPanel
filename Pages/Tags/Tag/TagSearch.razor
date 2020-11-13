@@ -1,19 +1,46 @@
-﻿<div class="input-group input-group-sm mb-3 dropdown">
-    <input type="text" class="form-control" @bind="value" data-toggle="dropdown">
-    <div class="dropdown-menu">
-        @foreach (var tag in tags)
-        {
-            <span class="dropdown-item" role="button" @onclick="()=>value=tag.text">@tag.text</span>
-        }
+﻿<div class="d-flex justify-content-start align-items-start mb-3">
+    <div class="input-group input-group-sm mb-3 dropdown">
+        <input type="text" class="form-control" @bind="value" data-toggle="dropdown">
+        <div class="dropdown-menu">
+            @foreach (var tag in tags)
+            {
+                <span class="dropdown-item" role="button" @onclick="()=>value=tag.text">@tag.text</span>
+            }
+        </div>
+        <div class="input-group-append">
+            <button class="btn btn-dark" @onclick="()=>добавить(value)"><i class="fas fa-plus"></i></button>
+        </div>
     </div>
-    <div class="input-group-append">
-        <button class="btn btn-dark"><i class="fas fa-plus"></i></button>
-    </div>    
+    @foreach (var tag in newTags)
+    {
+        <Tag tag="tag" убрать="()=>убрать(tag)"></Tag>
+    }
 </div>
 
-@code {
-    [Parameter]
-    public List<tag> tags { get; set; }
 
-    string value;
-}
+    @code {
+        [Parameter]
+        public List<tag> tags { get; set; }
+
+        string value;
+
+        List<tag> newTags = new List<tag>();
+        tag _selectedTag = new tag();
+
+        void добавить(string tag_text)
+        {
+            if (newTags.FirstOrDefault(t => t.text == tag_text) == null)
+            {
+                newTags.Add(new tag { text = tag_text });
+                value = String.Empty;
+            }
+        }
+
+        [Parameter]
+        public EventCallback<tag> удалить { get; set; }
+        void убрать(tag tag)
+        {
+            newTags.Remove(tag);
+            удалить.InvokeAsync(tag);
+        }
+    }
