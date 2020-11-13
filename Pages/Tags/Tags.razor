@@ -1,10 +1,12 @@
 ﻿@page "/tags"
 @inject ITagsService TagsService  
 
-@foreach (var tag in tags)
+@*@foreach (var tag in tags)
 {
     <Tag tag="tag"></Tag>
-}
+}*@
+
+<TagsCreater tags="tags"></TagsCreater>
 
 
 

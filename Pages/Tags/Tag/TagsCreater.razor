@@ -1,0 +1,49 @@
+﻿<div class="btn-group mb-3">
+    <div class="btn-group btn-group-sm">
+        <select class="btn btn-light" @bind="selectedTag">
+            @foreach (var tag in tags)
+            {
+                <option>@tag.text</option>
+            }
+        </select>
+        <button class="btn btn-dark" @onclick="()=>добавить(_selectedTag)"><i class="fas fa-plus"></i></button>
+    </div>
+    <div class="btn-group btn-group-sm">
+        @foreach (var tag in newTags)
+        {
+            <Tag tag="tag" убрать="()=>убрать(tag)"></Tag>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public List<tag> tags { get; set; }
+
+    List<tag> newTags = new List<tag>();
+    tag _selectedTag = new tag();
+    string selectedTag
+    {
+        get
+        {
+            return _selectedTag.text;
+        }
+        set
+        {
+            _selectedTag = new tag { text = value };
+        }
+    }
+
+    void добавить(tag tag)
+    {
+        if (newTags.FirstOrDefault(t=>t.text==tag.text)==null)
+        {
+            newTags.Add(tag);
+        }
+    }
+
+    void убрать(tag tag)
+    {
+        newTags.Remove(tag);
+    }
+}
