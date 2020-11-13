@@ -25,7 +25,7 @@ namespace blazorControlPanel.Services
         //ApplicationDbContext _context;
         DbContextOptions<ApplicationDbContext> _options;  
 
-        public PostsService(ApplicationDbContext context, DbContextOptions<ApplicationDbContext> options)
+        public PostsService(DbContextOptions<ApplicationDbContext> options)
         {
             //_context = context;
             _options = options;

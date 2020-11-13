@@ -1,0 +1,19 @@
+﻿@page "/tags"
+@inject ITagsService TagsService  
+
+@foreach (var tag in tags)
+{
+    <Tag tag="tag"></Tag>
+}
+
+
+
+
+@code {
+    List<tag> tags = new List<tag>();
+
+    protected override void OnInitialized()
+    {
+        tags = TagsService.tags();
+    }
+}
