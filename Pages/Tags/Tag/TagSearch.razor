@@ -1,0 +1,19 @@
+﻿<div class="input-group input-group-sm mb-3 dropdown">
+    <input type="text" class="form-control" @bind="value" data-toggle="dropdown">
+    <div class="dropdown-menu">
+        @foreach (var tag in tags)
+        {
+            <span class="dropdown-item" role="button" @onclick="()=>value=tag.text">@tag.text</span>
+        }
+    </div>
+    <div class="input-group-append">
+        <button class="btn btn-dark"><i class="fas fa-plus"></i></button>
+    </div>    
+</div>
+
+@code {
+    [Parameter]
+    public List<tag> tags { get; set; }
+
+    string value;
+}
