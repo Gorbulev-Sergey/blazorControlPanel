@@ -1,0 +1,33 @@
+﻿@media print {
+    html, body {
+        height: 297mm;
+        width: 100%;
+        margin:auto;
+        font-size: 18pt;
+    }
+
+    h1 {
+        font-size: 26pt;
+    }
+
+    h2 {
+        font-size: 22pt;
+    }
+
+    h3 {
+        font-size: 28pt;
+        margin-bottom:20px;
+        text-align:center;
+    }
+
+    .noprint, .header, .footer, .banner {
+        display: none;
+    }
+    th{
+        padding-top:5px!important;
+        padding-bottom:5px!important;
+    }
+}
+@page {
+        margin: 5mm 15mm 5mm 15mm;
+    }

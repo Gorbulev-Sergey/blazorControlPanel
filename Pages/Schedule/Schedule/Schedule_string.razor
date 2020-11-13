@@ -3,16 +3,16 @@
 <tr class="@цвет_фона">
     @if (date_show)
     {
-        <th scope="row" width="15%" class="font-weight-light mr-1">@schedule_string.date_and_time.Day, @CultureInfo.GetCultureInfo("ru-RU").DateTimeFormat.GetDayName(schedule_string.date_and_time.DayOfWeek)</th>
-        <th scope="row" width="55%" class="font-weight-light"><div class="@маркер_праздника">@schedule_string.description</div></th>
+        <th scope="row" width="15%" class="font-weight-normal mr-1">@schedule_string.date_and_time.Day, @CultureInfo.GetCultureInfo("ru-RU").DateTimeFormat.GetDayName(schedule_string.date_and_time.DayOfWeek)</th>
+        <th scope="row" width="55%" class="font-weight-normal"><div class="@маркер_праздника">@schedule_string.description</div></th>
     }
     else
     {
         <th scope="row" width="15%" class="border-top-0"></th>
-        <th scope="row" width="55%" class="border-top-0 font-weight-light"><div class="@маркер_праздника">@schedule_string.description</div></th>
+        <th scope="row" width="55%" class="border-top-0 font-weight-normal"><div class="@маркер_праздника">@schedule_string.description</div></th>
     }
-    <th scope="row" width="5%" class="font-weight-light"><div class="text-right mr-1">@schedule_string.date_and_time.ToShortTimeString()</div></th>
-    <th scope="row" width="25%" class="font-weight-light">@schedule_string.GetDescription(Enum.Parse<тип_службы>(schedule_string.prayer.ToString()))</th>
+    <th scope="row" width="5%" class="font-weight-normal"><div class="text-right mr-1">@schedule_string.date_and_time.ToShortTimeString()</div></th>
+    <th scope="row" width="25%" class="font-weight-normal">@schedule_string.GetDescription(Enum.Parse<тип_службы>(schedule_string.prayer.ToString()))</th>
 </tr>
 
 

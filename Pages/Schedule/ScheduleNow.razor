@@ -3,7 +3,10 @@
 @using System.Globalization
 @inject IViewBag ViewBag
 
-<h3>@CultureInfo.GetCultureInfo("ru-RU").DateTimeFormat.GetMonthName(DateTime.Now.Month) @DateTime.Now.Year года</h3>
+<div class="mb-2 d-flex align-items-center justify-content-between" >
+    <h3>Расписание на @CultureInfo.GetCultureInfo("ru-RU").DateTimeFormat.GetMonthName(DateTime.Now.Month).ToLower() @DateTime.Now.Year года</h3>
+    <button class="btn btn-light noprint" onclick="window.print()"><i class="fas fa-print"></i></button>
+</div>
 
 <Schedule date="DateTime.Now"></Schedule>
 
@@ -13,5 +16,7 @@
     protected override async Task OnInitializedAsync()
     {
         ViewBag.заголовок_страницы = "Расписание богослужений";
+
+        
     }
 }
