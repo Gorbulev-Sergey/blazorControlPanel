@@ -1,6 +1,6 @@
-﻿<div class="btn-group mb-3">
-    <div class="btn-group btn-group-sm">
-        <select class="btn btn-light" @bind="selectedTag">
+﻿<div class="d-flex justify-content-start align-items-start mb-3">
+    <div class="btn-group btn-group-sm mr-3">
+        <select class="btn btn-secondary" @bind="selectedTag">
             @foreach (var tag in tags)
             {
                 <option>@tag.text</option>
@@ -8,17 +8,26 @@
         </select>
         <button class="btn btn-dark" @onclick="()=>добавить(_selectedTag)"><i class="fas fa-plus"></i></button>
     </div>
-    <div class="btn-group btn-group-sm">
+    
         @foreach (var tag in newTags)
         {
             <Tag tag="tag" убрать="()=>убрать(tag)"></Tag>
         }
-    </div>
+    
 </div>
 
 @code {
     [Parameter]
     public List<tag> tags { get; set; }
+
+    [Parameter]
+    public EventCallback<tag> удалить { get; set; }
+    void убрать(tag tag)
+    {
+        newTags.Remove(tag);
+        удалить.InvokeAsync(tag);
+    }
+
 
     List<tag> newTags = new List<tag>();
     tag _selectedTag = new tag();
@@ -42,8 +51,8 @@
         }
     }
 
-    void убрать(tag tag)
+    protected override void OnInitialized()
     {
-        newTags.Remove(tag);
+        selectedTag = tags.FirstOrDefault().text;
     }
 }

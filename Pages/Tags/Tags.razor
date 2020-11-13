@@ -1,14 +1,7 @@
 ﻿@page "/tags"
 @inject ITagsService TagsService  
 
-@*@foreach (var tag in tags)
-{
-    <Tag tag="tag"></Tag>
-}*@
-
-<TagsCreater tags="tags"></TagsCreater>
-
-
+<TagsCreater tags="tags" удалить="удалить"></TagsCreater>
 
 
 @code {
@@ -17,5 +10,10 @@
     protected override void OnInitialized()
     {
         tags = TagsService.tags();
+    }
+
+    void удалить(tag tag)
+    {
+        
     }
 }
