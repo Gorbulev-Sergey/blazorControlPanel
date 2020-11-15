@@ -12,6 +12,7 @@ namespace blazorControlPanel.Services
     {
         List<tag> tags();
         Task add(tag tag);
+        Task remove(tag tag);
     }
 
     public class TagsService : ITagsService
@@ -36,6 +37,18 @@ namespace blazorControlPanel.Services
                 if (tag != null && !String.IsNullOrWhiteSpace(tag.text))
                 {
                     context.tags.Add(tag);
+                    await context.SaveChangesAsync();
+                }
+            }
+        }
+
+        public async Task remove(tag tag)
+        {
+            using (var context = new ApplicationDbContext(options))
+            {
+                if (tag != null)
+                {
+                    context.tags.Remove(tag);
                     await context.SaveChangesAsync();
                 }
             }

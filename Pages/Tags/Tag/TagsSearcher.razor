@@ -1,8 +1,8 @@
 ﻿@inject ITagsService TagsService
 
-<div class="d-flex justify-content-start align-items-start mb-3">
-    <div class="input-group input-group-sm w-auto dropdown mr-3">
-        <input type="text" class="form-control" @bind="value" data-toggle="dropdown" placeholder="Добавить тег">
+<div class="mb-3">
+    <div class="input-group input-group-sm w-25 dropdown mr-3 mb-2 d-inline-flex justify-content-start">
+        <input type="text" class="form-control" @bind-value="value" data-toggle="dropdown" placeholder="Добавить тег">
         <div class="dropdown-menu w-100">
             @foreach (var tag in tags)
             {
@@ -13,49 +13,73 @@
             <button class="btn btn-secondary" @onclick="()=>добавить(value)"><i class="fas fa-plus"></i></button>
         </div>
     </div>
-    @foreach (var tag in newTags)
+    @foreach (var tag in addedTags)
     {
         <Tag tag="tag" убрать="()=>убрать(tag)"></Tag>
     }
 </div>
 
 
-    @code {
-        [Parameter]
-        public List<tag> tags { get; set; }
-
-        string value;
-
-        List<tag> newTags = new List<tag>();
-        tag _selectedTag = new tag();
-
-        void добавить(string tag_text)
+@code {
+    string value;
+    List<tag> tags = new List<tag>();
+    void добавить(string tag_text)
+    {
+        if (tags.FirstOrDefault(t => t.text == tag_text) != null)
         {
-            if (tags.FirstOrDefault(t => t.text == tag_text) != null)
+            if (addedTags.FirstOrDefault(t => t.text == tag_text) == null)
             {
-                if (newTags.FirstOrDefault(t => t.text == tag_text) == null)
-                {
-                    newTags.Add(tags.FirstOrDefault(t => t.text == tag_text));
-                }
+                addedTags.Add(tags.FirstOrDefault(t => t.text == tag_text));
             }
-            else
-            {
-                if (!String.IsNullOrWhiteSpace(tag_text))
-                {
-                    var tag = new tag { text = tag_text.ToLower() };
-                    TagsService.add(tag);
-                    tags.Add(tag);
-                    newTags.Add(tag);
-                }
-            }
-            value = String.Empty;
         }
-
-        [Parameter]
-        public EventCallback<tag> удалить { get; set; }
-        void убрать(tag tag)
+        else
         {
-            newTags.Remove(tag);
-            удалить.InvokeAsync(tag);
+            if (!String.IsNullOrWhiteSpace(tag_text))
+            {
+                var tag = new tag { text = tag_text.ToLower() };
+                TagsService.add(tag);
+                tags.Add(tag);
+                addedTags.Add(tag);
+            }
+        }
+        addedTagsChanged.InvokeAsync(addedTags);
+        value = String.Empty;
+    }
+
+    List<tag> _addedTags = new List<tag>();
+    [Parameter]
+    public List<tag> addedTags
+    {
+        get => _addedTags;
+        set
+        {
+            if (_addedTags!=value)
+            {
+                _addedTags = value;
+            }
         }
     }
+    [Parameter]
+    public EventCallback<List<tag>> addedTagsChanged { get; set; }
+        
+    [Parameter]
+    public bool inserted { get; set; }
+
+    void убрать(tag tag)
+    {
+        addedTags.Remove(tag);
+        удалить.InvokeAsync(tag);
+        addedTagsChanged.InvokeAsync(addedTags);
+    }
+    [Parameter]
+    public EventCallback<tag> удалить { get; set; }
+
+    protected override void OnInitialized()
+    {
+        tags = TagsService.tags();
+        if (inserted)
+        {
+            addedTags.AddRange(tags);
+        }
+    }
+}

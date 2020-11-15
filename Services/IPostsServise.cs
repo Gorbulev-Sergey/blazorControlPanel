@@ -12,9 +12,10 @@ namespace blazorControlPanel.Services
     interface IPostsServise
     {
         Task<List<post>> posts();
+        post post(int ID);
         Task<string> create(post post);
-        Task<int> update(post post);
-        Task<int> delete(int id);
+        Task update(post post);
+        Task delete(int id);
 
         event Action Фильтр_изменён;
         void Изменить_фильтр();
@@ -35,8 +36,15 @@ namespace blazorControlPanel.Services
         {
             using (var context = new ApplicationDbContext(_options))
             {
-                return await context.posts.ToListAsync();
+                return await context.posts.Include(t=>t.posts_tags).ToListAsync();
             }            
+        }
+        public post post(int ID)
+        {
+            using (var context = new ApplicationDbContext(_options))
+            {
+                return context.posts.Include(t => t.posts_tags).FirstOrDefault(p => p.ID == ID);
+            }
         }
 
         public async Task<string> create(post post)
@@ -53,22 +61,22 @@ namespace blazorControlPanel.Services
             return "Не сохранена";
         }
 
-        public async Task<int> update(post post)
+        public async Task update(post post)
         {
             using (var context = new ApplicationDbContext(_options))
             {
-                context.Entry(post).State = EntityState.Modified;   
-                return await context.SaveChangesAsync();
+                context.Update(post);
+                await context.SaveChangesAsync();
             }
                         
         }
 
-        public async Task<int> delete(int id)
+        public async Task delete(int id)
         {
             using (var context = new ApplicationDbContext(_options))
             {
                 context.posts.Remove(context.posts.FirstOrDefault(p=>p.ID==id));
-                return await context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             
         }

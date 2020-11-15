@@ -1,21 +1,21 @@
 ﻿@page "/tags"
+@inject IViewBag ViewBag 
 @inject ITagsService TagsService  
 
-<TagsCreator tags="tags" удалить="удалить"></TagsCreator>
+<h3 class="mb-3">Доступные теги</h3>
 
-<TagsSearcher tags="tags"></TagsSearcher>
+<TagsSearcher inserted="true" удалить="удалить"></TagsSearcher>
+
 
 
 @code {
-    List<tag> tags = new List<tag>();
-
     protected override void OnInitialized()
     {
-        tags = TagsService.tags();
+        ViewBag.заголовок_страницы = "Менеджер тегов";
     }
 
     void удалить(tag tag)
     {
-        
+        TagsService.remove(tag);
     }
 }

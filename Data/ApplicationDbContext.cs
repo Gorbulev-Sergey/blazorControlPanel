@@ -26,5 +26,21 @@ namespace blazorControlPanel.Data
         public DbSet<tag> tags { get; set; }
         public DbSet<imageAlbum> imageAlbums { get; set; }
         public DbSet<schedule_string> schedule { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            //builder.Entity<post_tag>()
+            //.HasKey(t => new { t.postID, t.tagID });
+
+            //builder.Entity<post_tag>()
+            //    .HasOne(sc => sc.post)
+            //    .WithMany(s => s.posts_tags)
+            //    .HasForeignKey(sc => sc.postID);
+
+            //builder.Entity<post_tag>()
+            //    .HasOne(sc => sc.tag)
+            //    .WithMany(c => c.posts_tags)
+            //    .HasForeignKey(sc => sc.tagID);
+        }
     }
 }

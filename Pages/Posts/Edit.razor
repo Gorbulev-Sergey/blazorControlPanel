@@ -2,6 +2,7 @@
 @attribute [Authorize(Roles = "администратор")]
 @inject IViewBag ViewBag
 @inject IPostsServise PostsService
+@inject ITagsService TagsService 
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
 
@@ -23,7 +24,7 @@
     </div>
 </div>
 
-<EditForm Model="post">
+@*<EditForm Model="post">*@
     <div class="tab-content" id="nav-tabContent">
         @*Обложка публикации*@
         <div class="tab-pane fade show active" id="list-home">
@@ -40,6 +41,10 @@
                             <input id="is_published" class="form-check-input bg-dark" type="checkbox" value="false" @bind="post.published">
                             <label for="is_published" class="form-check-label">Опубликовать</label>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <p>тегов: @post.posts_tags.Count</p>
+                        <TagsSearcher @bind-addedTags="post.posts_tags"></TagsSearcher>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -80,7 +85,7 @@
             </div>
         </div>
     </div>
-</EditForm>
+@*</EditForm>*@
 
 
 
@@ -101,11 +106,10 @@
         }
     }
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         ViewBag.заголовок_страницы = "Редактировать публикацию";
-        var posts = await PostsService.posts();
-        post = posts.FirstOrDefault(p => p.ID == ID);
+        post = PostsService.post(ID);
     }
 
     async Task сохранить()
