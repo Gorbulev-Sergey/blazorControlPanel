@@ -12,12 +12,13 @@ namespace blazorControlPanel.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
             Database.EnsureCreated();
-            posts = Set<post>();
-            comments = Set<comment>();
-            likes = Set<like>();
-            tags = Set<tag>();
-            imageAlbums = Set<imageAlbum>();
-            schedule = Set<schedule_string>();
+            //posts = Set<post>();
+            //comments = Set<comment>();
+            //likes = Set<like>();
+            //tags = Set<tag>();
+            //imageAlbums = Set<imageAlbum>();
+            //schedule = Set<schedule_string>();
+            //posts_tags = Set<post_tag>();
         }
 
         public DbSet<post> posts { get; set; }
@@ -26,21 +27,28 @@ namespace blazorControlPanel.Data
         public DbSet<tag> tags { get; set; }
         public DbSet<imageAlbum> imageAlbums { get; set; }
         public DbSet<schedule_string> schedule { get; set; }
+        public DbSet<post_tag> posts_tags { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //builder.Entity<post_tag>()
-            //.HasKey(t => new { t.postID, t.tagID });
-
-            //builder.Entity<post_tag>()
-            //    .HasOne(sc => sc.post)
-            //    .WithMany(s => s.posts_tags)
-            //    .HasForeignKey(sc => sc.postID);
-
-            //builder.Entity<post_tag>()
-            //    .HasOne(sc => sc.tag)
-            //    .WithMany(c => c.posts_tags)
-            //    .HasForeignKey(sc => sc.tagID);
+            // Настройка связи многие-ко-многим для post-tag
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<post>()
+            .HasMany(p => p.tags)
+            .WithMany(p => p.posts)
+            .UsingEntity<post_tag>(
+                j => j
+                    .HasOne(pt => pt.tag)
+                    .WithMany(t => t.posts_tags)
+                    .HasForeignKey(pt => pt.tagID),
+                j => j
+                    .HasOne(pt => pt.post)
+                    .WithMany(p => p.posts_tags)
+                    .HasForeignKey(pt => pt.postID),
+                j =>
+                {
+                    j.HasKey(t => new { t.postID, t.tagID });
+                });
         }
     }
 }

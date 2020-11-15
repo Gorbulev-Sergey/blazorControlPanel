@@ -36,14 +36,14 @@ namespace blazorControlPanel.Services
         {
             using (var context = new ApplicationDbContext(_options))
             {
-                return await context.posts.Include(t=>t.posts_tags).ToListAsync();
+                return await context.posts.Include(t=>t.tags).ToListAsync();
             }            
         }
         public post post(int ID)
         {
             using (var context = new ApplicationDbContext(_options))
             {
-                return context.posts.Include(t => t.posts_tags).FirstOrDefault(p => p.ID == ID);
+                return context.posts.Include(t => t.tags).FirstOrDefault(p => p.ID == ID);
             }
         }
 

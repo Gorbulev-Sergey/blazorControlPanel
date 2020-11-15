@@ -20,6 +20,7 @@ namespace blazorControlPanel.Models
         public DateTime updated { get; set; }= new DateTime();
 
         public int? postID { get; set; }
+        public List<post> posts { get; set; } = new List<post>();
         public List<post_tag> posts_tags { get; set; } = new List<post_tag>();
     }
 }
