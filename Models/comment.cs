@@ -27,6 +27,6 @@ namespace blazorControlPanel.Models
         public string userId { get; set; }
         public string userName { get; set; }
         public int? postID { get; set; }
-        public int? imagesAlbumID { get; set; }
+        public int? imageAlbumID { get; set; }
     }
 }
