@@ -52,15 +52,14 @@ namespace blazorControlPanel.Services
             if (post != null)
             {
                 var tags = post.tags;
-                post.tags = new List<tag>();
-                DateTime дата = post.created = DateTime.Now;
+                post.tags = null;
 
                 using (var context = new ApplicationDbContext(_options))
                 {
                     context.posts.Add(post);
                     await context.SaveChangesAsync();
-                                           
-                    context.posts.Include(t => t.tags).FirstOrDefault(p => p.created == дата).tags.AddRange(tags);
+
+                    context.posts.Include(t=>t.tags).FirstOrDefault(p => p.Equals(post)).tags.AddRange(tags);
                     await context.SaveChangesAsync();
 
                     return "Сохранена";
@@ -71,9 +70,34 @@ namespace blazorControlPanel.Services
 
         public async Task update(post post)
         {
+            // Обновляем всё, кроме тегов
             using (var context = new ApplicationDbContext(_options))
             {
-                context.Entry(post).State = EntityState.Modified;
+                var tags = post.tags;
+                post.tags = null;
+                context.Update(post);
+                await context.SaveChangesAsync();
+
+                post.tags = tags;
+            }
+
+            // Обновляем теги
+            using (var context = new ApplicationDbContext(_options))
+            {
+                post postDB = context.posts.Include(t => t.tags).FirstOrDefault(p => p.ID == post.ID);
+
+                // Работаем с тегами
+                List<tag> новыеТеги = post.tags;
+                List<tag> старыеТеги = postDB.tags;
+                List<tag> наДобавление = новыеТеги.Where(t => t.posts.Count == 0).ToList();
+                List<tag> наУдаление = старыеТеги.Where(x => новыеТеги.All(a => a.ID != x.ID)).ToList();
+
+                postDB.tags.AddRange(наДобавление);
+                foreach (var t in наУдаление)
+                {
+                    postDB.tags.Remove(t);
+                }
+                
                 await context.SaveChangesAsync();
             }
                         
