@@ -51,12 +51,20 @@ namespace blazorControlPanel.Services
         {
             if (post != null)
             {
+                var tags = post.tags;
+                post.tags = new List<tag>();
+                DateTime дата = post.created = DateTime.Now;
+
                 using (var context = new ApplicationDbContext(_options))
                 {
                     context.posts.Add(post);
                     await context.SaveChangesAsync();
+                                           
+                    context.posts.Include(t => t.tags).FirstOrDefault(p => p.created == дата).tags.AddRange(tags);
+                    await context.SaveChangesAsync();
+
                     return "Сохранена";
-                }                
+                }
             }
             return "Не сохранена";
         }
@@ -65,7 +73,7 @@ namespace blazorControlPanel.Services
         {
             using (var context = new ApplicationDbContext(_options))
             {
-                context.Update(post);
+                context.Entry(post).State = EntityState.Modified;
                 await context.SaveChangesAsync();
             }
                         

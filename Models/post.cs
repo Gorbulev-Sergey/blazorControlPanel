@@ -32,7 +32,6 @@ namespace blazorControlPanel.Models
         public DateTime updated { get; set; } = DateTime.Now;
         [Display(Name = "Теги")]
         public List<tag> tags { get; set; } = new List<tag>();
-        public List<post_tag> posts_tags { get; set; } = new List<post_tag>();
         [Display(Name = "Комментарии")]
         public virtual IList<comment> comments { get; set; } = new List<comment>();
         [Display(Name = "Нравится")]
