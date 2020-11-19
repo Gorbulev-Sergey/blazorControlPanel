@@ -1,12 +1,25 @@
 ﻿
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Program).Assembly">
-        <Found Context="routeData">
-            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <Found Context="routeData">            
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(InputLayout)">
+                <NotAuthorized>
+                    @if (!context.User.Identity.IsAuthenticated)
+                    {
+                        <div class="container mt-3">
+                            <div class="alert alert-info">
+                                <p>У вас отсутствуют права доступа. Перейдите на <a href="/Identity/Account/Login">страницу входа</a>.</p>
+                            </div>
+                        </div>
+                    }
+                </NotAuthorized>
+            </AuthorizeRouteView>
         </Found>
         <NotFound>
-            <LayoutView Layout="@typeof(MainLayout)">
-                <p>Sorry, there's nothing at this address.</p>
+            <LayoutView Layout="@typeof(InputLayout)">
+                <div class="container mt-3">
+                    <div class="alert alert-info">Данная страница отсутствует.</div>
+                </div>                
             </LayoutView>
         </NotFound>
     </Router>
